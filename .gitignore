@@ -42,3 +42,6 @@ dist/
 
 # Local AI Models
 models/
+
+# Application Logs
+logs/*.log

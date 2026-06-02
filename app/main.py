@@ -2,6 +2,11 @@ from fastapi import FastAPI
 
 from app.api.v1.router import api_router
 from app.core.config import settings
+from app.core.logging import configure_logging, get_logger
+
+configure_logging()
+
+logger = get_logger(__name__)
 
 app = FastAPI(
     title=settings.app_name,
@@ -9,7 +14,15 @@ app = FastAPI(
     version=settings.app_version,
 )
 
-app.include_router(api_router)
+app.include_router(api_router, prefix="/api/v1")
+
+
+@app.on_event("startup")
+async def startup_event():
+    logger.info(
+        "Cortex application started | environment=%s",
+        settings.environment.value,
+    )
 
 
 @app.get("/")
