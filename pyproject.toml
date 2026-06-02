@@ -1,6 +1,10 @@
 [project]
 name = "cortex"
 version = "0.1.0"
-description = "Add your description here"
-requires-python = ">=3.9"
+description = "AI-powered knowledge and reasoning platform"
+readme = "README.md"
+requires-python = ">=3.11"
 dependencies = []
+
+[tool.uv]
+package = false
