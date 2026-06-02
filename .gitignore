@@ -1,0 +1,44 @@
+
+---
+
+# .gitignore
+
+Create:
+
+```gitignore
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environments
+venv/
+.venv/
+env/
+
+# Environment Variables
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
+
+# Testing
+.pytest_cache/
+.coverage
+
+# Build
+build/
+dist/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Local AI Models
+models/
