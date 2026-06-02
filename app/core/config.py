@@ -1,21 +1,54 @@
+import os
+from enum import Enum
 from functools import lru_cache
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
+class Environment(str, Enum):
+    LOCAL = "local"
+    DEV = "dev"
+    STAGING = "staging"
+    PROD = "prod"
+
+
+ENVIRONMENT = os.getenv("ENVIRONMENT", Environment.LOCAL.value)
+
+
 class Settings(BaseSettings):
-    app_name: str = "Cortex"
-    app_version: str = "0.1.0"
-    environment: str = "local"
+    """
+    Cortex application settings.
+
+    Values are loaded from:
+    configs/environments/{ENVIRONMENT}.env
+    """
+
+    # Application Metadata
+    app_name: str
+    app_version: str
+
+    # Runtime Environment
+    environment: Environment
+
+    # Runtime Settings
+    debug: bool = False
+    log_level: str = "INFO"
 
     model_config = SettingsConfigDict(
-        env_file=".env",
-        extra="ignore"
+        env_file=f"configs/environments/{ENVIRONMENT}.env",
+        env_file_encoding="utf-8",
+        extra="ignore",
     )
 
 
 @lru_cache
 def get_settings() -> Settings:
+    """
+    Returns a cached Settings instance.
+
+    Settings are loaded once during application startup
+    and reused throughout the application lifecycle.
+    """
     return Settings()
 
 
