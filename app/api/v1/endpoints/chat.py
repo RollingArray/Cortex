@@ -8,6 +8,10 @@ from app.services.ai.factory import (
     get_ai_provider,
 )
 
+from app.services.chat.service import (
+    ChatService,
+)
+
 router = APIRouter(
     prefix="/chat",
     tags=["Chat"],
@@ -22,12 +26,12 @@ async def chat(
     request: ChatRequest,
 ):
 
-    provider = get_ai_provider()
+    service = ChatService()
 
-    response = await provider.generate(
+    response = await service.generate_response(
         request.prompt
     )
 
     return ChatResponse(
         response=response
-    )
+    ) 

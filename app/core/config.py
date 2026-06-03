@@ -12,7 +12,15 @@ class Environment(str, Enum):
     PROD = "prod"
 
 
-ENVIRONMENT = os.getenv("ENVIRONMENT", Environment.LOCAL.value)
+class AIProvider(str, Enum):
+    MOCK = "mock"
+    OLLAMA = "ollama"
+
+
+ENVIRONMENT = os.getenv(
+    "ENVIRONMENT",
+    Environment.LOCAL.value,
+)
 
 
 class Settings(BaseSettings):
@@ -20,19 +28,38 @@ class Settings(BaseSettings):
     Cortex application settings.
 
     Values are loaded from:
+
     configs/environments/{ENVIRONMENT}.env
     """
 
+    # --------------------------------------------------
     # Application Metadata
+    # --------------------------------------------------
+
     app_name: str
     app_version: str
 
+    # --------------------------------------------------
     # Runtime Environment
+    # --------------------------------------------------
+
     environment: Environment
 
-    # Runtime Settings
     debug: bool = False
     log_level: str = "INFO"
+
+    # --------------------------------------------------
+    # AI Configuration
+    # --------------------------------------------------
+
+    ai_provider: AIProvider = AIProvider.MOCK
+
+    ollama_host: str = "http://localhost:11434"
+    ollama_model: str = "llama3.2"
+
+    # --------------------------------------------------
+    # Pydantic Settings
+    # --------------------------------------------------
 
     model_config = SettingsConfigDict(
         env_file=f"configs/environments/{ENVIRONMENT}.env",
@@ -42,13 +69,14 @@ class Settings(BaseSettings):
 
 
 @lru_cache
-def get_settings() -> Settings:
+def get_settings() -> "Settings":
     """
     Returns a cached Settings instance.
 
     Settings are loaded once during application startup
     and reused throughout the application lifecycle.
     """
+
     return Settings()
 
 
