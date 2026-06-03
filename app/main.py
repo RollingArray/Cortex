@@ -8,6 +8,9 @@ from app.exceptions.handlers import (
     cortex_exception_handler,
     generic_exception_handler,
 )
+from app.middleware.request_context import (
+    request_context_middleware,
+)
 
 configure_logging()
 
@@ -17,6 +20,9 @@ app = FastAPI(
     title=settings.app_name,
     description="AI-powered knowledge and reasoning platform",
     version=settings.app_version,
+)
+app.middleware("http")(
+    request_context_middleware
 )
 app.add_exception_handler(
     CortexException,
