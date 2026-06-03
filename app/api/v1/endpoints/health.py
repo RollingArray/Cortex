@@ -7,6 +7,7 @@ from app.schemas.health import (
     ReadinessResponse,
     ServiceInfoResponse,
 )
+from app.exceptions.custom import CortexException
 
 router = APIRouter(tags=["Health"])
 
@@ -49,3 +50,11 @@ async def info():
         "version": settings.app_version,
         "environment": settings.environment.value,
     }
+
+@router.get("/error")
+async def error():
+
+    raise CortexException(
+        message="Intentional test error",
+        code="TEST_ERROR",
+    )

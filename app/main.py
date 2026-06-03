@@ -3,6 +3,11 @@ from fastapi import FastAPI
 from app.api.v1.router import api_router
 from app.core.config import settings
 from app.core.logging import configure_logging, get_logger
+from app.exceptions.custom import CortexException
+from app.exceptions.handlers import (
+    cortex_exception_handler,
+    generic_exception_handler,
+)
 
 configure_logging()
 
@@ -12,6 +17,15 @@ app = FastAPI(
     title=settings.app_name,
     description="AI-powered knowledge and reasoning platform",
     version=settings.app_version,
+)
+app.add_exception_handler(
+    CortexException,
+    cortex_exception_handler,
+)
+
+app.add_exception_handler(
+    Exception,
+    generic_exception_handler,
 )
 
 app.include_router(api_router, prefix="/api/v1")
