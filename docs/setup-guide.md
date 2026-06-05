@@ -512,3 +512,219 @@ Verify application starts successfully before testing endpoints.
 
 ```
 ```
+## Verify Service Endpoints
+
+The following endpoints should be available after Cortex starts successfully.
+
+Base URL:
+
+```text
+http://localhost:8000
+```
+
+---
+
+### Root Endpoint
+
+Open:
+
+```text
+http://localhost:8000/
+```
+
+Expected:
+
+```json
+{
+  "message": "Welcome to Cortex"
+}
+```
+
+---
+
+### Health Endpoint
+
+Open:
+
+```text
+http://localhost:8000/api/v1/health
+```
+
+Expected:
+
+```json
+{
+  "success": true,
+  "status": "healthy"
+}
+```
+
+Purpose:
+
+* Liveness checks
+* Service monitoring
+* Operational validation
+
+---
+
+### Readiness Endpoint
+
+Open:
+
+```text
+http://localhost:8000/api/v1/ready
+```
+
+Expected:
+
+```json
+{
+  "success": true,
+  "status": "ready"
+}
+```
+
+Purpose:
+
+* Readiness validation
+* Future dependency verification
+* Deployment health checks
+
+---
+
+### Service Metadata Endpoint
+
+Open:
+
+```text
+http://localhost:8000/api/v1/info
+```
+
+Expected:
+
+```json
+{
+  "success": true,
+  "application": "Cortex",
+  "version": "0.1.0",
+  "environment": "local"
+}
+```
+
+Purpose:
+
+* Environment verification
+* Runtime metadata inspection
+
+---
+
+### Chat Endpoint
+
+Open Swagger UI:
+
+```text
+http://localhost:8000/docs
+```
+
+Locate:
+
+```text
+POST /api/v1/chat
+```
+
+Example Request:
+
+```json
+{
+  "prompt": "What is Cortex?"
+}
+```
+
+Expected Response:
+
+```json
+{
+  "success": true,
+  "response": "Mock response for: What is Cortex?"
+}
+```
+
+Purpose:
+
+* Validate AI provider abstraction
+* Verify chat service integration
+* Confirm provider factory configuration
+
+---
+
+### Retrieval Endpoint
+
+Open Swagger UI:
+
+```text
+http://localhost:8000/docs
+```
+
+Locate:
+
+```text
+POST /api/v1/retrieve
+```
+
+Example Request:
+
+```json
+{
+  "query": "What is Cortex?"
+}
+```
+
+Expected Response:
+
+```json
+{
+  "success": true,
+  "results": [
+    "Cortex is an AI platform"
+  ]
+}
+```
+
+Purpose:
+
+* Validate retrieval service
+* Verify vector store integration
+* Confirm knowledge retrieval workflow
+
+Note:
+
+Retrieval results depend on indexed content being available.
+
+---
+
+## API Documentation
+
+Swagger UI:
+
+```text
+http://localhost:8000/docs
+```
+
+OpenAPI Specification:
+
+```text
+http://localhost:8000/openapi.json
+```
+
+Swagger should expose all currently registered endpoints.
+
+Typical endpoints include:
+
+```text
+GET    /
+GET    /api/v1/health
+GET    /api/v1/ready
+GET    /api/v1/info
+POST   /api/v1/chat
+POST   /api/v1/retrieve
+```
