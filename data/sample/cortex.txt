@@ -1,1 +1,5 @@
 Cortex is an AI-powered knowledge and reasoning platform.
+
+The platform uses Ollama embeddings and Qdrant vector search.
+
+Cortex is designed using modular architecture principles.

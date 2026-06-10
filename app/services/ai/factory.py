@@ -1,17 +1,21 @@
+from functools import lru_cache
+
 from app.core.config import (
     AIProvider,
     settings,
 )
 
-from app.services.ai.base import AIProvider as BaseAIProvider
-from app.services.ai.mock import MockProvider
+from app.services.ai.mock import (
+    MockProvider,
+)
+
+from app.services.ai.ollama import (
+    OllamaProvider,
+)
 
 
-def get_ai_provider() -> BaseAIProvider:
-    """
-    Factory responsible for returning
-    the configured AI provider.
-    """
+@lru_cache
+def get_ai_provider():
 
     match settings.ai_provider:
 
@@ -19,14 +23,12 @@ def get_ai_provider() -> BaseAIProvider:
             return MockProvider()
 
         case AIProvider.OLLAMA:
-            raise NotImplementedError(
-                "Ollama provider is not yet enabled"
-            )
+            return OllamaProvider()
 
         case _:
             raise ValueError(
                 (
-                    "Unsupported AI provider: "
+                    "Unsupported provider: "
                     f"{settings.ai_provider}"
                 )
             )
