@@ -1,0 +1,7 @@
+{
+  "name": "cortex-ui",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
