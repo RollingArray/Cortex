@@ -1,8 +1,29 @@
+from app.core.config import settings
+
 from app.services.embeddings.mock import (
     MockEmbeddingProvider,
+)
+
+from app.services.embeddings.ollama import (
+    OllamaEmbeddingProvider,
 )
 
 
 def get_embedding_provider():
 
-    return MockEmbeddingProvider()
+    match settings.embedding_provider:
+
+        case "mock":
+            return MockEmbeddingProvider()
+
+        case "ollama":
+            return OllamaEmbeddingProvider()
+
+        case _:
+            raise ValueError(
+                (
+                    "Unsupported embedding "
+                    f"provider: "
+                    f"{settings.embedding_provider}"
+                )
+            )

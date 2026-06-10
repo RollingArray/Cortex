@@ -5,6 +5,10 @@ from functools import lru_cache
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
+# ==================================================
+# Environment Configuration
+# ==================================================
+
 class Environment(str, Enum):
     LOCAL = "local"
     DEV = "dev"
@@ -12,16 +16,37 @@ class Environment(str, Enum):
     PROD = "prod"
 
 
+# ==================================================
+# AI Providers
+# ==================================================
+
 class AIProvider(str, Enum):
     MOCK = "mock"
     OLLAMA = "ollama"
 
+
+# ==================================================
+# Embedding Providers
+# ==================================================
+
+class EmbeddingProvider(str, Enum):
+    MOCK = "mock"
+    OLLAMA = "ollama"
+
+
+# ==================================================
+# Runtime Environment
+# ==================================================
 
 ENVIRONMENT = os.getenv(
     "ENVIRONMENT",
     Environment.LOCAL.value,
 )
 
+
+# ==================================================
+# Application Settings
+# ==================================================
 
 class Settings(BaseSettings):
     """
@@ -56,6 +81,25 @@ class Settings(BaseSettings):
 
     ollama_host: str = "http://localhost:11434"
     ollama_model: str = "llama3.2"
+
+    # --------------------------------------------------
+    # Embedding Configuration
+    # --------------------------------------------------
+
+    embedding_provider: EmbeddingProvider = (
+        EmbeddingProvider.MOCK
+    )
+
+    ollama_embedding_model: str = (
+        "nomic-embed-text"
+    )
+
+    # --------------------------------------------------
+    # Future Vector Store Configuration
+    # --------------------------------------------------
+
+    # vector_store: str = "mock"
+    # chroma_path: str = "data/chroma"
 
     # --------------------------------------------------
     # Pydantic Settings
