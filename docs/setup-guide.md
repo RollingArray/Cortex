@@ -728,3 +728,139 @@ GET    /api/v1/info
 POST   /api/v1/chat
 POST   /api/v1/retrieve
 ```
+
+
+## Install Ollama
+
+Cortex uses Ollama for local AI model execution.
+
+### Install Ollama
+
+```bash
+curl -fsSL https://ollama.com/install.sh | sh
+```
+
+Verify installation:
+
+```bash
+ollama --version
+```
+
+Expected:
+
+```text
+ollama version x.x.x
+```
+
+---
+
+## Verify Ollama Service
+
+Check that the Ollama runtime is available:
+
+```bash
+curl http://localhost:11434/api/tags
+```
+
+Expected response:
+
+```json
+{
+  "models": []
+}
+```
+
+or a list of installed models.
+
+---
+
+## Download Required Models
+
+### Chat Model
+
+```bash
+ollama pull llama3.2
+```
+
+### Embedding Model
+
+```bash
+ollama pull nomic-embed-text
+```
+
+Verify:
+
+```bash
+ollama list
+```
+
+Expected:
+
+```text
+NAME
+llama3.2
+nomic-embed-text
+```
+
+---
+
+## Environment Configuration
+
+Verify:
+
+```bash
+cat configs/environments/local.env
+```
+
+Expected values:
+
+```env
+AI_PROVIDER=mock
+
+EMBEDDING_PROVIDER=ollama
+
+OLLAMA_HOST=http://localhost:11434
+OLLAMA_MODEL=llama3.2
+OLLAMA_EMBEDDING_MODEL=nomic-embed-text
+```
+
+---
+
+## Run Integration Tests
+
+Execute:
+
+```bash
+pytest tests/integration -v
+```
+
+Expected:
+
+```text
+PASSED
+```
+
+for all Ollama integration tests.
+
+---
+
+## Verify Embedding Generation
+
+Run:
+
+```bash
+pytest tests/integration/test_ollama_embeddings.py -v
+```
+
+Expected:
+
+```text
+PASSED
+```
+
+This confirms:
+
+* Ollama runtime is available
+* Embedding model is installed
+* Cortex can generate real embeddings
+* Configuration is valid
