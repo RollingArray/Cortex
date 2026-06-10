@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-
+from typing import Any
 
 @dataclass
 class VectorRecord:
@@ -7,3 +7,4 @@ class VectorRecord:
     content: str
     embedding: list[float]
     source: str
+    metadata: dict[str, Any] | None = None

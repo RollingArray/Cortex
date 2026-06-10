@@ -43,6 +43,10 @@ ENVIRONMENT = os.getenv(
     Environment.LOCAL.value,
 )
 
+class VectorStoreProvider(str, Enum):
+    MOCK = "mock"
+    QDRANT = "qdrant"
+
 
 # ==================================================
 # Application Settings
@@ -95,12 +99,18 @@ class Settings(BaseSettings):
     )
 
     # --------------------------------------------------
-    # Future Vector Store Configuration
+    # Vector Store Configuration
     # --------------------------------------------------
 
-    # vector_store: str = "mock"
-    # chroma_path: str = "data/chroma"
+    vector_store_provider: VectorStoreProvider = (
+        VectorStoreProvider.MOCK
+    )
 
+    qdrant_mode: str = "memory"
+
+    qdrant_collection_name: str = (
+        "cortex_knowledge"
+    )
     # --------------------------------------------------
     # Pydantic Settings
     # --------------------------------------------------
@@ -110,6 +120,8 @@ class Settings(BaseSettings):
         env_file_encoding="utf-8",
         extra="ignore",
     )
+
+    
 
 
 @lru_cache
