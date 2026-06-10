@@ -12,6 +12,7 @@ from app.services.vectorstores.base import (
 from app.services.vectorstores.models import (
     VectorRecord,
 )
+from pathlib import Path
 
 
 class QdrantVectorStore(
@@ -20,9 +21,24 @@ class QdrantVectorStore(
 
     def __init__(self):
 
-        self.client = QdrantClient(
-            ":memory:"
+        Path(
+            settings.qdrant_path
+        ).mkdir(
+            parents=True,
+            exist_ok=True,
         )
+
+        if settings.qdrant_mode == "memory":
+
+            self.client = QdrantClient(
+                ":memory:"
+            )
+
+        else:
+
+            self.client = QdrantClient(
+                path=settings.qdrant_path
+            )
 
         self.collection_name = (
             settings.qdrant_collection_name
@@ -38,15 +54,19 @@ class QdrantVectorStore(
         if self._initialized:
             return
 
-        self.client.recreate_collection(
-            collection_name=(
-                self.collection_name
-            ),
-            vectors_config=VectorParams(
-                size=dimensions,
-                distance=Distance.COSINE,
-            ),
-        )
+        if not self.client.collection_exists(
+            self.collection_name
+        ):
+
+            self.client.create_collection(
+                collection_name=(
+                    self.collection_name
+                ),
+                vectors_config=VectorParams(
+                    size=dimensions,
+                    distance=Distance.COSINE,
+                ),
+            )
 
         self._initialized = True
 

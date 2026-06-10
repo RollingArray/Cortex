@@ -45,3 +45,6 @@ models/
 
 # Application Logs
 logs/*.log
+
+# Qdrant Storage
+data/qdrant/

@@ -108,6 +108,8 @@ class Settings(BaseSettings):
 
     qdrant_mode: str = "memory"
 
+    qdrant_path: str = "data/qdrant"
+
     qdrant_collection_name: str = (
         "cortex_knowledge"
     )
