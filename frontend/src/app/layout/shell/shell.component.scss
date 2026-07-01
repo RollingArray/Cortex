@@ -1,0 +1,19 @@
+:host {
+  display: block;
+}
+
+.shell-content {
+
+	display: flex;
+
+	flex-direction: column;
+
+	height: 100%;
+
+	width: 100%;
+
+}
+
+ion-split-pane {
+  --side-width: 270px;
+}

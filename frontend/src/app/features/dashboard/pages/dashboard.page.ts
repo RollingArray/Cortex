@@ -12,7 +12,12 @@ import {
   IonGrid,
   IonRow,
   IonCol,
+  IonButtons,
+	IonMenuButton,
 } from '@ionic/angular/standalone';
+import { FooterComponent } from 'src/app/layout/footer/footer.component';
+import { PageLayoutComponent } from 'src/app/layout/page-layout/page-layout.component';
+import { TopbarComponent } from 'src/app/layout/topbar/topbar.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -31,6 +36,11 @@ import {
     IonGrid,
     IonRow,
     IonCol,
+    IonButtons,
+    IonMenuButton,
+    TopbarComponent,
+    FooterComponent,
+    PageLayoutComponent
   ],
 })
 export class DashboardPage {}

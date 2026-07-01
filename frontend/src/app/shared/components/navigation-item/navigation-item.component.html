@@ -1,0 +1,18 @@
+@if (!item.hidden) {
+  <ion-menu-toggle auto-hide="false">
+    <ion-item
+      [routerLink]="item.path"
+      routerDirection="root"
+      routerLinkActive="selected"
+      lines="none"
+      detail="false"
+      [disabled]="item.disabled"
+    >
+      <ion-icon slot="start" [icon]="item.icon"> </ion-icon>
+
+      <ion-label>
+        {{ item.title }}
+      </ion-label>
+    </ion-item>
+  </ion-menu-toggle>
+}

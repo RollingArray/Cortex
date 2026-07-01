@@ -1,0 +1,44 @@
+:host {
+  display: block;
+}
+
+ion-toolbar {
+  --background: var(--cortex-surface);
+
+  --color: var(--cortex-text-secondary);
+
+  border-top: 1px solid var(--cortex-border);
+
+  min-height: 36px;
+}
+
+.footer {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 0 16px;
+
+  font-size: 0.8rem;
+}
+
+.footer-left,
+.footer-right {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+}
+
+.status-dot {
+  width: 8px;
+
+  height: 8px;
+
+  border-radius: 50%;
+
+  background: #22c55e;
+}

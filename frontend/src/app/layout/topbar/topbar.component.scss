@@ -1,0 +1,23 @@
+:host {
+
+	display: block;
+
+}
+
+ion-toolbar {
+
+	--background: var(--cortex-background);
+
+	--color: var(--cortex-text-primary);
+
+	border-bottom: 1px solid var(--cortex-border);
+
+}
+
+ion-title {
+
+	font-size: 1rem;
+
+	font-weight: 600;
+
+}

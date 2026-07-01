@@ -1,0 +1,13 @@
+<ion-menu contentId="main-content" menuId="main-menu">
+  <ion-content>
+    <ion-list>
+      <ion-list-header> Cortex </ion-list-header>
+
+      <ion-note> AI Knowledge Platform </ion-note>
+
+      @for (item of navigation; track item.path) {
+        <app-navigation-item [item]="item"> </app-navigation-item>
+      }
+    </ion-list>
+  </ion-content>
+</ion-menu>

@@ -1,0 +1,61 @@
+:host {
+  display: block;
+}
+
+ion-menu {
+  --width: 270px;
+}
+
+ion-content {
+  --background: var(--cortex-sidebar-background);
+}
+
+ion-list {
+  background: transparent;
+
+  padding: 24px 12px;
+}
+
+ion-list-header {
+  font-size: 1.4rem;
+
+  font-weight: 700;
+
+  color: var(--cortex-text-primary);
+
+  margin-bottom: 4px;
+}
+
+ion-note {
+  display: block;
+
+  margin: 0 16px 24px;
+
+  color: var(--cortex-text-muted);
+}
+
+ion-item {
+  --background: transparent;
+
+  --color: var(--cortex-text-secondary);
+
+  --border-radius: 12px;
+
+  margin-bottom: 6px;
+
+  transition: all 0.2s ease-in-out;
+}
+
+ion-item:hover {
+  --background: var(--cortex-sidebar-hover);
+}
+
+ion-item.selected {
+  --background: var(--cortex-primary);
+
+  --color: white;
+}
+
+ion-icon {
+  font-size: 20px;
+}

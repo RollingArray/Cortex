@@ -4,22 +4,36 @@
 |--------------------------------------------------------------------------
 */
 
-@import "@fontsource/inter";
+@import '@fontsource/inter';
 
 /* ==========================================================================
    Global
    ========================================================================== */
 
 html,
-body,
-ion-app {
+body {
+  width: 100%;
 
-  font-family: "Inter", sans-serif;
+  height: 100%;
+
+  margin: 0;
+
+  padding: 0;
+}
+
+app-root,
+ion-app {
+  display: block;
+
+  width: 100%;
+
+  height: 100%;
+
+  font-family: 'Inter', sans-serif;
 
   background: var(--cortex-background);
 
   color: var(--cortex-text-primary);
-
 }
 
 /* ==========================================================================
@@ -32,17 +46,13 @@ h3,
 h4,
 h5,
 h6 {
-
   font-weight: 600;
 
   color: var(--cortex-text-primary);
-
 }
 
 p {
-
   color: var(--cortex-text-secondary);
-
 }
 
 /* ==========================================================================
@@ -50,13 +60,11 @@ p {
    ========================================================================== */
 
 ion-toolbar {
-
   --background: var(--cortex-background);
 
   --color: var(--cortex-text-primary);
 
   border-bottom: 1px solid var(--cortex-border);
-
 }
 
 /* ==========================================================================
@@ -64,9 +72,7 @@ ion-toolbar {
    ========================================================================== */
 
 ion-content {
-
   --background: var(--cortex-background);
-
 }
 
 /* ==========================================================================
@@ -74,7 +80,6 @@ ion-content {
    ========================================================================== */
 
 ion-card {
-
   background: var(--cortex-surface);
 
   border: 1px solid var(--cortex-border);
@@ -82,15 +87,12 @@ ion-card {
   border-radius: var(--cortex-radius-lg);
 
   box-shadow: var(--cortex-shadow-sm);
-
 }
 
 ion-card-title {
-
   font-size: 1rem;
 
   font-weight: 600;
-
 }
 
 /* ==========================================================================
@@ -98,11 +100,9 @@ ion-card-title {
    ========================================================================== */
 
 ion-item {
-
   --background: transparent;
 
   --color: var(--cortex-text-primary);
-
 }
 
 /* ==========================================================================
@@ -110,15 +110,15 @@ ion-item {
    ========================================================================== */
 
 ion-menu {
-
   --background: var(--cortex-sidebar-background);
 
+  height: 100%;
 }
 
 ion-menu ion-content {
-
   --background: var(--cortex-sidebar-background);
 
+  height: 100%;
 }
 
 /* ==========================================================================
@@ -126,15 +126,11 @@ ion-menu ion-content {
    ========================================================================== */
 
 ::-webkit-scrollbar {
-
   width: 10px;
-
 }
 
 ::-webkit-scrollbar-thumb {
-
   background: var(--cortex-border);
 
   border-radius: 999px;
-
 }
