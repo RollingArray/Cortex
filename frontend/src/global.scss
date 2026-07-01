@@ -1,0 +1,140 @@
+/*
+|--------------------------------------------------------------------------
+| Cortex Global Styles
+|--------------------------------------------------------------------------
+*/
+
+@import "@fontsource/inter";
+
+/* ==========================================================================
+   Global
+   ========================================================================== */
+
+html,
+body,
+ion-app {
+
+  font-family: "Inter", sans-serif;
+
+  background: var(--cortex-background);
+
+  color: var(--cortex-text-primary);
+
+}
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+
+  font-weight: 600;
+
+  color: var(--cortex-text-primary);
+
+}
+
+p {
+
+  color: var(--cortex-text-secondary);
+
+}
+
+/* ==========================================================================
+   Toolbar
+   ========================================================================== */
+
+ion-toolbar {
+
+  --background: var(--cortex-background);
+
+  --color: var(--cortex-text-primary);
+
+  border-bottom: 1px solid var(--cortex-border);
+
+}
+
+/* ==========================================================================
+   Content
+   ========================================================================== */
+
+ion-content {
+
+  --background: var(--cortex-background);
+
+}
+
+/* ==========================================================================
+   Cards
+   ========================================================================== */
+
+ion-card {
+
+  background: var(--cortex-surface);
+
+  border: 1px solid var(--cortex-border);
+
+  border-radius: var(--cortex-radius-lg);
+
+  box-shadow: var(--cortex-shadow-sm);
+
+}
+
+ion-card-title {
+
+  font-size: 1rem;
+
+  font-weight: 600;
+
+}
+
+/* ==========================================================================
+   List
+   ========================================================================== */
+
+ion-item {
+
+  --background: transparent;
+
+  --color: var(--cortex-text-primary);
+
+}
+
+/* ==========================================================================
+   Menu
+   ========================================================================== */
+
+ion-menu {
+
+  --background: var(--cortex-sidebar-background);
+
+}
+
+ion-menu ion-content {
+
+  --background: var(--cortex-sidebar-background);
+
+}
+
+/* ==========================================================================
+   Scrollbar
+   ========================================================================== */
+
+::-webkit-scrollbar {
+
+  width: 10px;
+
+}
+
+::-webkit-scrollbar-thumb {
+
+  background: var(--cortex-border);
+
+  border-radius: 999px;
+
+}
