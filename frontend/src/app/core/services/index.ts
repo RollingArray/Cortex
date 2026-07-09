@@ -13,4 +13,12 @@
 
 export * from './api.service';
 
+export * from './auth-service.token';
+
+export * from './auth.service';
+
 export * from './health.service';
+
+export * from './health.service';
+
+export * from './mock-auth.service';

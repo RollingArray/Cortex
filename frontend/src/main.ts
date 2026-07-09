@@ -1,22 +1,28 @@
 /**
- * Application Bootstrap
+ * Cortex Application Bootstrap
  *
- * Project:
- * --------
- * Cortex
+ * Author:
+ * -------
+ * Ranjoy Sen
  *
  * Purpose:
  * --------
- * Bootstraps the Angular application and registers
- * all application-wide providers.
+ * Bootstraps the Cortex Angular application
+ * and registers the application's core
+ * infrastructure providers.
  *
  * Responsibilities:
  * -----------------
- * - Bootstrap application
- * - Configure routing
+ * - Bootstrap Angular
  * - Configure Ionic
- * - Register HTTP client
+ * - Configure Routing
+ * - Configure HTTP Client
+ * - Register Authentication
  */
+
+/*------------------------------------------------------------------------------
+ * Angular
+ *----------------------------------------------------------------------------*/
 
 import { bootstrapApplication } from '@angular/platform-browser';
 
@@ -27,12 +33,33 @@ import {
   PreloadAllModules,
 } from '@angular/router';
 
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+
+/*------------------------------------------------------------------------------
+ * Ionic
+ *----------------------------------------------------------------------------*/
 
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 
-import { routes } from './app/app.routes';
+/*------------------------------------------------------------------------------
+ * Application
+ *----------------------------------------------------------------------------*/
+
 import { AppComponent } from './app/app.component';
+
+import { routes } from './app/app.routes';
+
+/*------------------------------------------------------------------------------
+ * Core
+ *----------------------------------------------------------------------------*/
+
+import { AUTH_SERVICE, MockAuthService } from './app/core/services';
+
+import { authInterceptor } from './app/core/interceptors/auth.interceptor';
+
+/*------------------------------------------------------------------------------
+ * Bootstrap
+ *----------------------------------------------------------------------------*/
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -41,10 +68,19 @@ bootstrapApplication(AppComponent, {
       useClass: IonicRouteStrategy,
     },
 
+    {
+      provide: AUTH_SERVICE,
+      useClass: MockAuthService,
+    },
+
     provideIonicAngular(),
 
-    provideRouter(routes, withPreloading(PreloadAllModules)),
+    provideHttpClient(withInterceptors([authInterceptor])),
 
-    provideHttpClient(withInterceptorsFromDi()),
+    provideRouter(
+      routes,
+
+      withPreloading(PreloadAllModules),
+    ),
   ],
 });
