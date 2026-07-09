@@ -1,0 +1,29 @@
+/**
+ * Cortex Z-Index
+ *
+ * Author:
+ * -------
+ * Ranjoy Sen
+ *
+ * Purpose:
+ * --------
+ * Defines the application's layer hierarchy.
+ */
+
+/*------------------------------------------------------------------------------
+ * Layers
+ *----------------------------------------------------------------------------*/
+
+:root {
+  --cortex-z-base: 1;
+
+  --cortex-z-dropdown: 100;
+
+  --cortex-z-sticky: 200;
+
+  --cortex-z-overlay: 500;
+
+  --cortex-z-modal: 1000;
+
+  --cortex-z-toast: 1100;
+}

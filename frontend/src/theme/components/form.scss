@@ -1,0 +1,17 @@
+/**
+ * Form Theme
+ *
+ * Author:
+ * -------
+ * Ranjoy Sen
+ *
+ * Purpose:
+ * --------
+ * Defines the application's form appearance.
+ */
+
+ion-input,
+ion-select,
+ion-textarea {
+  --border-radius: var(--cortex-radius-md);
+}

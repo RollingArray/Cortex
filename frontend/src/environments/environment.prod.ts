@@ -1,3 +1,9 @@
 export const environment = {
-  production: true
+  production: true,
+
+  api: {
+    baseUrl: '/api',
+
+    timeout: 30000,
+  },
 };

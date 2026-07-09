@@ -1,121 +1,51 @@
-/*
- * ----------------------------------------------------------------------------
- * Cortex Theme Variables
- * ----------------------------------------------------------------------------
- * Centralized design tokens for the Cortex UI.
- * Built on top of the Ionic theming system.
- * ----------------------------------------------------------------------------
+/**
+ * Cortex Theme
+ *
+ * Author:
+ * -------
+ * Ranjoy Sen
+ *
+ * Purpose:
+ * --------
+ * Master entry point for the Cortex Design System.
  */
 
-:root {
+/*------------------------------------------------------------------------------
+ * Design Tokens
+ *----------------------------------------------------------------------------*/
 
-  /* ==========================================================================
-     Cortex Brand Colors
-     ========================================================================== */
+@use './tokens/colors';
 
-  --cortex-primary: #4f46e5;
-  --cortex-secondary: #0ea5e9;
-  --cortex-success: #10b981;
-  --cortex-warning: #f59e0b;
-  --cortex-danger: #ef4444;
+@use './tokens/spacing';
 
-  /* ==========================================================================
-     Backgrounds
-     ========================================================================== */
+@use './tokens/typography';
 
-  --cortex-background: #0f172a;
-  --cortex-surface: #1e293b;
-  --cortex-surface-hover: #293548;
-  --cortex-border: #334155;
+@use './tokens/radius';
 
-  /* ==========================================================================
-     Text
-     ========================================================================== */
+@use './tokens/shadows';
 
-  --cortex-text-primary: #f8fafc;
-  --cortex-text-secondary: #cbd5e1;
-  --cortex-text-muted: #94a3b8;
+@use './tokens/transitions';
 
-  /* ==========================================================================
-     Sidebar
-     ========================================================================== */
+@use './tokens/breakpoints';
 
-  --cortex-sidebar-background: #111827;
-  --cortex-sidebar-hover: #1f2937;
-  --cortex-sidebar-active: #4f46e5;
+@use './tokens/z-index';
 
-  /* ==========================================================================
-     Status
-     ========================================================================== */
+@use './tokens/elevation';
 
-  --cortex-status-online: #22c55e;
-  --cortex-status-warning: #f59e0b;
-  --cortex-status-offline: #ef4444;
+/*------------------------------------------------------------------------------
+ * Component Themes
+ *----------------------------------------------------------------------------*/
 
-  /* ==========================================================================
-     Border Radius
-     ========================================================================== */
+@use './components/card';
 
-  --cortex-radius-sm: 8px;
-  --cortex-radius-md: 12px;
-  --cortex-radius-lg: 16px;
-  --cortex-radius-xl: 20px;
+@use './components/toolbar';
 
-  /* ==========================================================================
-     Shadows
-     ========================================================================== */
+@use './components/menu';
 
-  --cortex-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.15);
+@use './components/list';
 
-  --cortex-shadow-md:
-    0 4px 12px rgba(0, 0, 0, 0.20);
+@use './components/content';
 
-  --cortex-shadow-lg:
-    0 12px 32px rgba(0, 0, 0, 0.30);
+@use './components/button';
 
-  /* ==========================================================================
-     Spacing
-     ========================================================================== */
-
-  --cortex-spacing-xs: 4px;
-  --cortex-spacing-sm: 8px;
-  --cortex-spacing-md: 16px;
-  --cortex-spacing-lg: 24px;
-  --cortex-spacing-xl: 32px;
-
-  /* ==========================================================================
-     Ionic Theme Overrides
-     ========================================================================== */
-
-  --ion-color-primary: var(--cortex-primary);
-  --ion-color-primary-rgb: 79, 70, 229;
-  --ion-color-primary-contrast: #ffffff;
-  --ion-color-primary-shade: #4338ca;
-  --ion-color-primary-tint: #6366f1;
-
-  --ion-background-color: var(--cortex-background);
-  --ion-background-color-rgb: 15, 23, 42;
-
-  --ion-text-color: var(--cortex-text-primary);
-  --ion-text-color-rgb: 248, 250, 252;
-
-  --ion-card-background: var(--cortex-surface);
-
-  --ion-border-color: var(--cortex-border);
-
-  --ion-toolbar-background: var(--cortex-background);
-  --ion-toolbar-color: var(--cortex-text-primary);
-
-  --ion-item-background: transparent;
-  --ion-item-color: var(--cortex-text-primary);
-
-  --ion-tab-bar-background: var(--cortex-background);
-
-  --ion-font-family:
-    "Inter",
-    "Segoe UI",
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif;
-}
+@use './components/form';

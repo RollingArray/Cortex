@@ -1,0 +1,29 @@
+/**
+ * Cortex Spacing
+ *
+ * Author:
+ * -------
+ * Ranjoy Sen
+ *
+ * Purpose:
+ * --------
+ * Defines the application's spacing scale.
+ */
+
+:root {
+  --cortex-space-none: 0;
+
+  --cortex-space-xs: 4px;
+
+  --cortex-space-sm: 8px;
+
+  --cortex-space-md: 16px;
+
+  --cortex-space-lg: 24px;
+
+  --cortex-space-xl: 32px;
+
+  --cortex-space-2xl: 48px;
+
+  --cortex-space-3xl: 64px;
+}

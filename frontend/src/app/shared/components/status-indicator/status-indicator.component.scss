@@ -1,0 +1,50 @@
+/**
+ * Status Indicator Component
+ *
+ * Author:
+ * -------
+ * Ranjoy Sen
+ *
+ * Purpose:
+ * --------
+ * Provides the styles for the reusable status
+ * indicator component.
+ *
+ * Features:
+ * ---------
+ * - Status colors
+ * - Component layout
+ * - Status indicator styling
+ */
+
+.status {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  font-weight: 500;
+}
+
+.status-dot {
+  width: 10px;
+
+  height: 10px;
+
+  border-radius: 50%;
+
+  background: var(--ion-color-medium);
+}
+
+.status-dot.healthy {
+  background: var(--ion-color-success);
+}
+
+.status-dot.offline {
+  background: var(--ion-color-danger);
+}
+
+.status-text {
+  text-transform: capitalize;
+}

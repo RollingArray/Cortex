@@ -1,37 +1,52 @@
+<!--
+/**
+ * Dashboard Component
+ *
+ * Author:
+ * -------
+ * Ranjoy Sen
+ *
+ * Purpose:
+ * --------
+ * Provides the Cortex dashboard displaying platform
+ * health, metrics and operational overview.
+ *
+ * Features:
+ * ---------
+ * - Backend health
+ * - Knowledge metrics
+ * - Platform overview
+ */
+-->
 
-<app-page-layout
-	pageTitle="Dashboard">
+<app-page-layout pageTitle="Dashboard">
   <ion-content class="dashboard-content">
     <ion-grid>
       <ion-row>
         <ion-col size="12" sizeMd="4">
-          <ion-card>
-            <ion-card-header>
-              <ion-card-title> Documents </ion-card-title>
-            </ion-card-header>
-
-            <ion-card-content> 0 Indexed </ion-card-content>
-          </ion-card>
+          <app-metric-card
+            title="Documents"
+            subtitle="Indexed Documents"
+            [icon]="icons.Metrics.Documents"
+          >
+            > 0
+          </app-metric-card>
         </ion-col>
 
         <ion-col size="12" sizeMd="4">
-          <ion-card>
-            <ion-card-header>
-              <ion-card-title> Chunks </ion-card-title>
-            </ion-card-header>
-
-            <ion-card-content> 0 Chunks </ion-card-content>
-          </ion-card>
+          <app-metric-card
+            title="Chunks"
+            subtitle="Knowledge Chunks"
+            [icon]="icons.Navigation.Chat"
+          >
+            0
+          </app-metric-card>
         </ion-col>
 
         <ion-col size="12" sizeMd="4">
-          <ion-card>
-            <ion-card-header>
-              <ion-card-title> AI Status </ion-card-title>
-            </ion-card-header>
-
-            <ion-card-content> Ready </ion-card-content>
-          </ion-card>
+          <app-metric-card title="Backend" subtitle="API Health" [icon]="icons.Navigation.Chat">
+            <app-status-indicator [status]="healthStatus"> </app-status-indicator>
+          </app-metric-card>
         </ion-col>
       </ion-row>
     </ion-grid>

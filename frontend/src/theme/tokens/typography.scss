@@ -1,0 +1,58 @@
+/**
+ * Cortex Typography
+ *
+ * Author:
+ * -------
+ * Ranjoy Sen
+ *
+ * Purpose:
+ * --------
+ * Defines typography design tokens used throughout
+ * the Cortex platform.
+ */
+
+:root {
+  /*--------------------------------------------------------------------------
+	 * Font Family
+	 *--------------------------------------------------------------------------*/
+
+  --cortex-font-family: 'Inter', sans-serif;
+
+  /*--------------------------------------------------------------------------
+	 * Font Size
+	 *--------------------------------------------------------------------------*/
+
+  --cortex-font-size-xs: 0.75rem;
+
+  --cortex-font-size-sm: 0.875rem;
+
+  --cortex-font-size-md: 1rem;
+
+  --cortex-font-size-lg: 1.125rem;
+
+  --cortex-font-size-xl: 1.5rem;
+
+  --cortex-font-size-2xl: 2rem;
+
+  /*--------------------------------------------------------------------------
+	 * Font Weight
+	 *--------------------------------------------------------------------------*/
+
+  --cortex-font-weight-regular: 400;
+
+  --cortex-font-weight-medium: 500;
+
+  --cortex-font-weight-semibold: 600;
+
+  --cortex-font-weight-bold: 700;
+
+  /*--------------------------------------------------------------------------
+	 * Line Height
+	 *--------------------------------------------------------------------------*/
+
+  --cortex-line-height-tight: 1.2;
+
+  --cortex-line-height-normal: 1.5;
+
+  --cortex-line-height-loose: 1.8;
+}

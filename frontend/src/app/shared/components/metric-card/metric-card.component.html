@@ -1,0 +1,45 @@
+<!--
+/**
+ * Metric Card Component
+ *
+ * Author:
+ * -------
+ * Ranjoy Sen
+ *
+ * Purpose:
+ * --------
+ * Provides the HTML template for the reusable
+ * metric card component.
+ *
+ * Features:
+ * ---------
+ * - Card title
+ * - Optional subtitle
+ * - Optional icon
+ * - Content projection
+ */
+-->
+
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>
+      @if (icon) {
+        <ion-icon [icon]="icon"> </ion-icon>
+      }
+
+      {{ title }}
+    </ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <div class="metric-value">
+      <ng-content> </ng-content>
+    </div>
+
+    @if (subtitle) {
+      <div class="metric-subtitle">
+        {{ subtitle }}
+      </div>
+    }
+  </ion-card-content>
+</ion-card>

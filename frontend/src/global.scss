@@ -1,129 +1,27 @@
-/*
-|--------------------------------------------------------------------------
-| Cortex Global Styles
-|--------------------------------------------------------------------------
-*/
-
 @import '@fontsource/inter';
 
-/* ==========================================================================
-   Global
-   ========================================================================== */
+/**
+ * Cortex Global Styles
+ *
+ * Author:
+ * -------
+ * Ranjoy Sen
+ *
+ * Purpose:
+ * --------
+ * Provides application-wide styles that are not
+ * component-specific.
+ */
 
 html,
-body {
-  width: 100%;
-
-  height: 100%;
-
-  margin: 0;
-
-  padding: 0;
-}
-
-app-root,
+body,
 ion-app {
-  display: block;
-
-  width: 100%;
-
-  height: 100%;
-
-  font-family: 'Inter', sans-serif;
+  font-family: var(--cortex-font-family);
 
   background: var(--cortex-background);
 
   color: var(--cortex-text-primary);
 }
-
-/* ==========================================================================
-   Typography
-   ========================================================================== */
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: 600;
-
-  color: var(--cortex-text-primary);
-}
-
-p {
-  color: var(--cortex-text-secondary);
-}
-
-/* ==========================================================================
-   Toolbar
-   ========================================================================== */
-
-ion-toolbar {
-  --background: var(--cortex-background);
-
-  --color: var(--cortex-text-primary);
-
-  border-bottom: 1px solid var(--cortex-border);
-}
-
-/* ==========================================================================
-   Content
-   ========================================================================== */
-
-ion-content {
-  --background: var(--cortex-background);
-}
-
-/* ==========================================================================
-   Cards
-   ========================================================================== */
-
-ion-card {
-  background: var(--cortex-surface);
-
-  border: 1px solid var(--cortex-border);
-
-  border-radius: var(--cortex-radius-lg);
-
-  box-shadow: var(--cortex-shadow-sm);
-}
-
-ion-card-title {
-  font-size: 1rem;
-
-  font-weight: 600;
-}
-
-/* ==========================================================================
-   List
-   ========================================================================== */
-
-ion-item {
-  --background: transparent;
-
-  --color: var(--cortex-text-primary);
-}
-
-/* ==========================================================================
-   Menu
-   ========================================================================== */
-
-ion-menu {
-  --background: var(--cortex-sidebar-background);
-
-  height: 100%;
-}
-
-ion-menu ion-content {
-  --background: var(--cortex-sidebar-background);
-
-  height: 100%;
-}
-
-/* ==========================================================================
-   Scrollbar
-   ========================================================================== */
 
 ::-webkit-scrollbar {
   width: 10px;
@@ -132,5 +30,5 @@ ion-menu ion-content {
 ::-webkit-scrollbar-thumb {
   background: var(--cortex-border);
 
-  border-radius: 999px;
+  border-radius: var(--cortex-radius-round);
 }

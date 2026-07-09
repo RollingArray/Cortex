@@ -1,0 +1,25 @@
+/**
+ * Cortex Shadows
+ *
+ * Author:
+ * -------
+ * Ranjoy Sen
+ *
+ * Purpose:
+ * --------
+ * Defines the application's shadow design tokens.
+ */
+
+/*------------------------------------------------------------------------------
+ * Shadows
+ *----------------------------------------------------------------------------*/
+
+:root {
+  --cortex-shadow-none: none;
+
+  --cortex-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+
+  --cortex-shadow-md: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+  --cortex-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+}

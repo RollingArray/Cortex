@@ -1,0 +1,23 @@
+/**
+ * Cortex Elevation
+ *
+ * Author:
+ * -------
+ * Ranjoy Sen
+ *
+ * Purpose:
+ * --------
+ * Defines elevation levels for reusable UI components.
+ */
+
+/*------------------------------------------------------------------------------
+ * Elevation
+ *----------------------------------------------------------------------------*/
+
+:root {
+  --cortex-elevation-1: var(--cortex-shadow-sm);
+
+  --cortex-elevation-2: var(--cortex-shadow-md);
+
+  --cortex-elevation-3: var(--cortex-shadow-lg);
+}

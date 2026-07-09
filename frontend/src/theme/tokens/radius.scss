@@ -1,0 +1,31 @@
+/**
+ * Cortex Border Radius
+ *
+ * Author:
+ * -------
+ * Ranjoy Sen
+ *
+ * Purpose:
+ * --------
+ * Defines the application's border radius design tokens.
+ */
+
+/*------------------------------------------------------------------------------
+ * Radius
+ *----------------------------------------------------------------------------*/
+
+:root {
+  --cortex-radius-none: 0;
+
+  --cortex-radius-xs: 4px;
+
+  --cortex-radius-sm: 8px;
+
+  --cortex-radius-md: 12px;
+
+  --cortex-radius-lg: 16px;
+
+  --cortex-radius-xl: 24px;
+
+  --cortex-radius-round: 999px;
+}

@@ -1,0 +1,33 @@
+<!--
+/**
+ * Status Indicator Component
+ *
+ * Author:
+ * -------
+ * Ranjoy Sen
+ *
+ * Purpose:
+ * --------
+ * Provides the HTML template for the reusable status
+ * indicator component.
+ *
+ * Features:
+ * ---------
+ * - Status indicator layout
+ * - Status label
+ * - Status icon
+ */
+-->
+
+<div class="status">
+  <span
+    class="status-dot"
+    [class.healthy]="status === 'healthy'"
+    [class.offline]="status === 'offline'"
+  >
+  </span>
+
+  <span class="status-text">
+    {{ status }}
+  </span>
+</div>

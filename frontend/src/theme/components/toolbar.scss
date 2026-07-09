@@ -1,0 +1,29 @@
+/**
+ * Toolbar Theme
+ *
+ * Author:
+ * -------
+ * Ranjoy Sen
+ *
+ * Purpose:
+ * --------
+ * Defines the application's toolbar appearance.
+ */
+
+ion-toolbar {
+  --background: var(--cortex-background);
+
+  --color: var(--cortex-text-primary);
+
+  border-bottom: 1px solid var(--cortex-border);
+}
+
+ion-title {
+  color: var(--cortex-text-primary);
+
+  --color: var(--cortex-text-primary);
+
+  font-size: var(--cortex-font-size-lg);
+
+  font-weight: var(--cortex-font-weight-semibold);
+}

@@ -1,0 +1,39 @@
+/**
+ * Card Theme
+ *
+ * Author:
+ * -------
+ * Ranjoy Sen
+ *
+ * Purpose:
+ * --------
+ * Defines the application's card appearance.
+ */
+
+ion-card {
+  background: var(--cortex-surface);
+
+  border: 1px solid var(--cortex-border);
+
+  border-radius: var(--cortex-radius-lg);
+
+  box-shadow: var(--cortex-elevation-1);
+
+  margin: 0;
+}
+
+ion-card-title {
+  color: var(--cortex-text-primary);
+
+  --color: var(--cortex-text-primary);
+
+  font-size: var(--cortex-font-size-md);
+
+  font-weight: var(--cortex-font-weight-semibold);
+}
+
+ion-card-content {
+  color: var(--cortex-text-primary);
+
+  --color: var(--cortex-text-primary);
+}

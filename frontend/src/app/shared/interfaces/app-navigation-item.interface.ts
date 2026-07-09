@@ -1,5 +1,4 @@
 export interface AppNavigationItem {
-
   title: string;
 
   path: string;
@@ -9,5 +8,4 @@ export interface AppNavigationItem {
   disabled?: boolean;
 
   hidden?: boolean;
-
 }

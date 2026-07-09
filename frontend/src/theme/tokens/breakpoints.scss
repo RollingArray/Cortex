@@ -1,0 +1,27 @@
+/**
+ * Cortex Breakpoints
+ *
+ * Author:
+ * -------
+ * Ranjoy Sen
+ *
+ * Purpose:
+ * --------
+ * Defines responsive design breakpoints.
+ */
+
+/*------------------------------------------------------------------------------
+ * Breakpoints
+ *----------------------------------------------------------------------------*/
+
+:root {
+  --cortex-breakpoint-sm: 576px;
+
+  --cortex-breakpoint-md: 768px;
+
+  --cortex-breakpoint-lg: 992px;
+
+  --cortex-breakpoint-xl: 1200px;
+
+  --cortex-breakpoint-xxl: 1400px;
+}

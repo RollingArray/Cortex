@@ -1,0 +1,17 @@
+/**
+ * List Theme
+ *
+ * Author:
+ * -------
+ * Ranjoy Sen
+ *
+ * Purpose:
+ * --------
+ * Defines list and list item styling.
+ */
+
+ion-item {
+  --background: transparent;
+
+  --color: var(--cortex-text-primary);
+}

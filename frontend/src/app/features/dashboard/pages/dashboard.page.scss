@@ -1,8 +1,25 @@
+/**
+ * Dashboard Component
+ *
+ * Author:
+ * -------
+ * Ranjoy Sen
+ *
+ * Purpose:
+ * --------
+ * Provides the styles for the Cortex dashboard page.
+ *
+ * Features:
+ * ---------
+ * - Dashboard layout
+ * - Responsive spacing
+ * - Metric presentation
+ */
+
 .dashboard-content {
   --padding-top: 24px;
   --padding-start: 24px;
   --padding-end: 24px;
-  
 }
 
 ion-card {

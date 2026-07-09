@@ -1,0 +1,17 @@
+/**
+ * Button Theme
+ *
+ * Author:
+ * -------
+ * Ranjoy Sen
+ *
+ * Purpose:
+ * --------
+ * Defines the application's button appearance.
+ */
+
+ion-button {
+  --border-radius: var(--cortex-radius-md);
+
+  font-weight: var(--cortex-font-weight-semibold);
+}

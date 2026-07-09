@@ -1,0 +1,83 @@
+/**
+ * Menu Theme
+ *
+ * Author:
+ * -------
+ * Ranjoy Sen
+ *
+ * Purpose:
+ * --------
+ * Defines the application's navigation menu appearance.
+ */
+
+/*------------------------------------------------------------------------------
+ * Menu
+ *----------------------------------------------------------------------------*/
+
+ion-menu {
+  --background: var(--cortex-sidebar-background);
+
+  --width: 270px;
+
+  height: 100%;
+
+  border-right: 1px solid var(--cortex-border);
+}
+
+ion-menu ion-content {
+  --background: var(--cortex-sidebar-background);
+}
+
+ion-split-pane {
+  --side-border: 1px solid var(--cortex-border);
+}
+
+/*------------------------------------------------------------------------------
+ * Navigation Items
+ *----------------------------------------------------------------------------*/
+
+ion-menu ion-item {
+  --background: transparent;
+
+  --color: var(--cortex-text-secondary);
+
+  --border-radius: var(--cortex-radius-md);
+
+  margin-bottom: var(--cortex-space-xs);
+
+  transition: var(--cortex-transition-fast);
+}
+
+/*------------------------------------------------------------------------------
+ * Hover
+ *----------------------------------------------------------------------------*/
+
+ion-menu ion-item:hover {
+  --background: var(--cortex-sidebar-hover);
+}
+
+/*------------------------------------------------------------------------------
+ * Selected
+ *----------------------------------------------------------------------------*/
+
+ion-menu ion-item.selected {
+  --background: rgba(79, 70, 229, 0.12);
+
+  --color: var(--cortex-text-primary);
+
+  border-left: 3px solid var(--cortex-primary);
+}
+
+/*------------------------------------------------------------------------------
+ * Icons
+ *----------------------------------------------------------------------------*/
+
+ion-menu ion-icon {
+  color: var(--cortex-text-secondary);
+
+  font-size: 20px;
+}
+
+ion-menu ion-item.selected ion-icon {
+  color: var(--cortex-primary);
+}

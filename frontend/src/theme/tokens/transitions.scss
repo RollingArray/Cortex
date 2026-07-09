@@ -1,0 +1,23 @@
+/**
+ * Cortex Transitions
+ *
+ * Author:
+ * -------
+ * Ranjoy Sen
+ *
+ * Purpose:
+ * --------
+ * Defines reusable transition design tokens.
+ */
+
+/*------------------------------------------------------------------------------
+ * Transitions
+ *----------------------------------------------------------------------------*/
+
+:root {
+  --cortex-transition-fast: 150ms ease-in-out;
+
+  --cortex-transition-normal: 250ms ease-in-out;
+
+  --cortex-transition-slow: 350ms ease-in-out;
+}
