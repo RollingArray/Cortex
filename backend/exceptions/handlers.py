@@ -3,7 +3,7 @@ import logging
 from fastapi import Request
 from fastapi.responses import JSONResponse
 
-from backend.exceptions.custom import CortexException
+from backend.exceptions.base import CortexException
 from backend.schemas.error import ErrorDetail, ErrorResponse
 
 

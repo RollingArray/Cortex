@@ -11,18 +11,21 @@ Defines the base exception used throughout
 the Cortex platform.
 """
 
+from backend.models.enums.error_code import ErrorCode
 
-class CortexError(
+
+class CortexException(
     Exception,
 ):
     """
-    Base exception for all Cortex
-    domain errors.
+    Base Cortex exception.
     """
 
     def __init__(
         self,
         message: str,
+        code: ErrorCode = ErrorCode.CORTEX_ERROR,
+        status_code: int = 400,
     ) -> None:
 
         super().__init__(
@@ -30,3 +33,5 @@ class CortexError(
         )
 
         self.message = message
+        self.code = code
+        self.status_code = status_code

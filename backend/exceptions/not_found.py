@@ -10,11 +10,11 @@ Purpose:
 Resource Not Found Exception
 """
 
-from backend.exceptions.base import CortexError
+from backend.exceptions.base import CortexException
 
 
 class ResourceNotFoundError(
-    CortexError,
+    CortexException,
 ):
     """
     Raised when a requested resource

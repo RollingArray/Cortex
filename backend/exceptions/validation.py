@@ -10,9 +10,7 @@ Purpose:
 Validation Exception
 """
 
-from backend.exceptions.custom import (
-    CortexException,
-)
+from backend.exceptions.base import CortexException
 
 
 class BusinessRuleViolationException(

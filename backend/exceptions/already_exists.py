@@ -1,5 +1,5 @@
 """
-Base Exception
+Already Exists Exception
 
 Author:
 -------
@@ -7,14 +7,18 @@ Ranjoy Sen
 
 Purpose:
 --------
-Already Exists Exception
+Raised when attempting to create
+a resource that already exists.
 """
 
-from backend.exceptions.base import CortexError
+from fastapi import status
+
+from backend.exceptions.base import CortexException
+from backend.models.enums.error_code import ErrorCode
 
 
-class ResourceAlreadyExistsError(
-    CortexError,
+class ResourceAlreadyExistsException(
+    CortexException,
 ):
     """
     Raised when attempting to create
@@ -24,10 +28,16 @@ class ResourceAlreadyExistsError(
     def __init__(
         self,
         resource: str,
+        identifier: str | None = None,
     ) -> None:
 
-        super().__init__(
-            f"{resource} already exists.",
-        )
+        if identifier:
+            message = f"{resource} '{identifier}' already exists."
+        else:
+            message = f"{resource} already exists."
 
-        self.resource = resource
+        super().__init__(
+            message=message,
+            code=ErrorCode.RESOURCE_ALREADY_EXISTS,
+            status_code=409,
+        )

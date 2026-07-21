@@ -10,9 +10,7 @@ Purpose:
 Defines resource-related exceptions.
 """
 
-from backend.exceptions.custom import (
-    CortexException,
-)
+from backend.exceptions.base import CortexException
 from backend.models.enums.error_code import ErrorCode
 
 
