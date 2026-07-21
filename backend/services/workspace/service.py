@@ -157,7 +157,7 @@ class WorkspaceService:
             name=request.name,
             description=request.description,
             workspace_type=workspace_type,
-            owner_id="system",
+            created_by="system",
         )
 
         workspace = self._repository.save(

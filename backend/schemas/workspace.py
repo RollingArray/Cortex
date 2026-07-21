@@ -22,7 +22,7 @@ Features:
 # Imports
 # =============================================================================
 
-from backend.models.enums.workspace_type import WorkspaceType
+from backend.models.enums.workspace import WorkspaceType
 from pydantic import (
     BaseModel,
     Field,

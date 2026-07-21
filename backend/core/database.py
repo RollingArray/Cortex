@@ -10,20 +10,22 @@ Purpose:
 Provides SQLAlchemy engine and session
 configuration for the Cortex platform.
 
-Features:
----------
-- Database engine
-- Session factory
-- Session dependency
+Responsibilities
+----------------
+- Create database engine
+- Configure session factory
+- Provide database dependency
+
+This module intentionally performs no
+database initialization.
 """
 
 # =============================================================================
 # Imports
 # =============================================================================
 
-from pathlib import Path
-
 from collections.abc import Generator
+from pathlib import Path
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
@@ -36,10 +38,7 @@ from backend.core.config import settings
 # =============================================================================
 
 if settings.database_provider.value == "sqlite":
-
-    Path("data").mkdir(
-        exist_ok=True,
-    )
+    Path("data").mkdir(exist_ok=True)
 
 # =============================================================================
 # Engine
@@ -49,9 +48,7 @@ engine = create_engine(
     settings.database_url,
     echo=settings.debug,
     connect_args=(
-        {
-            "check_same_thread": False,
-        }
+        {"check_same_thread": False}
         if settings.database_provider.value == "sqlite"
         else {}
     ),
@@ -73,13 +70,13 @@ SessionLocal = sessionmaker(
 
 
 def get_database() -> Generator[Session, None, None]:
+    """
+    FastAPI database dependency.
+    """
 
     database = SessionLocal()
 
     try:
-
         yield database
-
     finally:
-
         database.close()
