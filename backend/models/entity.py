@@ -21,13 +21,14 @@ Features:
 
 from uuid import uuid4
 
-from sqlalchemy import String
-
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
 
 from backend.models.base import Base
-from backend.models.constants import UUID_LENGTH
+
+from uuid import UUID, uuid4
+
+from sqlalchemy import Uuid
 
 # =============================================================================
 # Entity Base
@@ -50,8 +51,8 @@ class Entity(Base):
     # Primary Key
     # -------------------------------------------------------------------------
 
-    id: Mapped[str] = mapped_column(
-        String(UUID_LENGTH),
+    id: Mapped[UUID] = mapped_column(
+        Uuid,
         primary_key=True,
-        default=lambda: str(uuid4()),
+        default=uuid4,
     )

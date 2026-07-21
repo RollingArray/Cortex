@@ -25,8 +25,11 @@ Features:
 from backend.models.enums.workspace import WorkspaceType
 from pydantic import (
     BaseModel,
+    ConfigDict,
     Field,
 )
+
+from uuid import UUID
 
 # =============================================================================
 # Workspace Summary
@@ -38,7 +41,9 @@ class WorkspaceSummary(BaseModel):
     Workspace summary used throughout the UI.
     """
 
-    id: str
+    model_config = ConfigDict(from_attributes=True)
+
+    id: UUID
 
     name: str
 

@@ -24,14 +24,17 @@ Features:
 # Imports
 # =============================================================================
 
-from backend.exceptions.resource import ResourceNotFoundException
+from uuid import UUID
+
 from sqlalchemy.orm import Session
 
-from backend.models import Workspace
+from backend.exceptions.already_exists import ResourceAlreadyExistsException
+from backend.exceptions.resource import ResourceNotFoundException
 
+from backend.models import Workspace
 from backend.models.enums import WorkspaceType
 
-from backend.repositories.workspace import WorkspaceRepository
+from backend.repositories.workspace.repository import WorkspaceRepository
 
 from backend.schemas.workspace import (
     WorkspaceSummary,
@@ -49,6 +52,10 @@ class WorkspaceService:
     Workspace business service.
     """
 
+    # -------------------------------------------------------------------------
+    # Construction
+    # -------------------------------------------------------------------------
+
     def __init__(
         self,
         database: Session,
@@ -64,7 +71,7 @@ class WorkspaceService:
 
     def _get_workspace(
         self,
-        workspace_id: str,
+        workspace_id: UUID,
     ) -> Workspace:
         """
         Retrieve a workspace or raise if it does not exist.
@@ -77,7 +84,7 @@ class WorkspaceService:
         if workspace is None:
             raise ResourceNotFoundException(
                 resource="Workspace",
-                resource_id=workspace_id,
+                resource_id=str(workspace_id),
             )
 
         return workspace
@@ -125,7 +132,7 @@ class WorkspaceService:
 
     def get_workspace(
         self,
-        workspace_id: str,
+        workspace_id: UUID,
     ) -> WorkspaceSummary:
         """
         Retrieve a workspace.
@@ -151,12 +158,20 @@ class WorkspaceService:
         Create a workspace.
         """
 
-        workspace_type = request.workspace_type.value
+        existing = self._repository.get_by_name(
+            request.name,
+        )
+
+        if existing is not None:
+            raise ResourceAlreadyExistsException(
+                resource="Workspace",
+                identifier=request.name,
+            )
 
         workspace = Workspace(
             name=request.name,
             description=request.description,
-            workspace_type=workspace_type,
+            workspace_type=request.workspace_type,
             created_by="system",
         )
 
@@ -170,7 +185,7 @@ class WorkspaceService:
 
     def update_workspace(
         self,
-        workspace_id: str,
+        workspace_id: UUID,
         request: UpdateWorkspaceRequest,
     ) -> WorkspaceSummary:
         """
@@ -197,7 +212,7 @@ class WorkspaceService:
 
     def delete_workspace(
         self,
-        workspace_id: str,
+        workspace_id: UUID,
     ) -> None:
         """
         Delete a workspace.
@@ -231,7 +246,7 @@ class WorkspaceService:
         workspace = Workspace(
             name="Personal Workspace",
             description="Your personal AI knowledge workspace.",
-            workspace_type=WorkspaceType.PERSONAL.value,
+            workspace_type=WorkspaceType.PERSONAL,
             owner_id="system",
         )
 

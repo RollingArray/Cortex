@@ -23,10 +23,14 @@ Features:
 # Imports
 # =============================================================================
 
+from uuid import UUID
+
 from fastapi import (
     APIRouter,
     Depends,
+    File,
     Response,
+    UploadFile,
     status,
 )
 
@@ -38,12 +42,14 @@ from backend.core.database import (
     get_database,
 )
 
+from backend.schemas.document import DocumentResponse, DocumentUploadResponse
 from backend.schemas.workspace import (
     WorkspaceSummary,
     CreateWorkspaceRequest,
     UpdateWorkspaceRequest,
 )
 
+from backend.services.document.service import DocumentService
 from backend.services.workspace import (
     WorkspaceService,
 )
@@ -89,7 +95,7 @@ async def get_workspaces(
     response_model=WorkspaceSummary,
 )
 async def get_workspace(
-    workspace_id: str,
+    workspace_id: UUID,
     database: Session = Depends(
         get_database,
     ),
@@ -136,7 +142,7 @@ async def create_workspace(
     response_model=WorkspaceSummary,
 )
 async def update_workspace(
-    workspace_id: str,
+    workspace_id: UUID,
     request: UpdateWorkspaceRequest,
     database: Session = Depends(
         get_database,
@@ -161,7 +167,7 @@ async def update_workspace(
     status_code=status.HTTP_204_NO_CONTENT,
 )
 async def delete_workspace(
-    workspace_id: str,
+    workspace_id: UUID,
     database: Session = Depends(
         get_database,
     ),
@@ -180,4 +186,36 @@ async def delete_workspace(
 
     return Response(
         status_code=status.HTTP_204_NO_CONTENT,
+    )
+
+
+@router.post(
+    "/{workspace_id}/documents",
+    response_model=DocumentUploadResponse,
+    status_code=status.HTTP_201_CREATED,
+)
+async def upload_document(
+    workspace_id: UUID,
+    file: UploadFile = File(...),
+    database: Session = Depends(
+        get_database,
+    ),
+) -> DocumentUploadResponse:
+    """
+    Upload a document into a workspace.
+    """
+
+    service = DocumentService(
+        database,
+    )
+
+    document = service.upload_document(
+        workspace_id=workspace_id,
+        file=file,
+    )
+
+    return DocumentUploadResponse(
+        document=DocumentResponse.model_validate(
+            document,
+        ),
     )

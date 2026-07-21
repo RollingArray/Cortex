@@ -44,6 +44,8 @@ FAILED      -> QUEUED
 
 from typing import TYPE_CHECKING
 
+from uuid import UUID
+
 from sqlalchemy import (
     BigInteger,
     CheckConstraint,
@@ -52,7 +54,6 @@ from sqlalchemy import (
     Index,
     JSON,
     String,
-    UniqueConstraint,
 )
 from sqlalchemy.ext.mutable import MutableDict
 
@@ -113,11 +114,6 @@ class Document(
             "processing_progress >= 0 " "AND processing_progress <= 100",
             name="document_processing_progress_valid",
         ),
-        UniqueConstraint(
-            "workspace_id",
-            "original_filename",
-            name="document_workspace_filename_unique",
-        ),
         Index(
             "ix_documents_workspace_id",
             "workspace_id",
@@ -140,7 +136,7 @@ class Document(
     # Foreign Keys
     # -------------------------------------------------------------------------
 
-    workspace_id: Mapped[str] = mapped_column(
+    workspace_id: Mapped[UUID] = mapped_column(
         ForeignKey(
             "workspaces.id",
             ondelete="CASCADE",
@@ -237,6 +233,15 @@ class Document(
         "Workspace",
         back_populates="documents",
         lazy="selectin",
+    )
+
+    # -------------------------------------------------------------------------
+    # Chunks
+    # -------------------------------------------------------------------------
+
+    chunk_count: Mapped[int] = mapped_column(
+        default=0,
+        nullable=False,
     )
 
     # -------------------------------------------------------------------------
