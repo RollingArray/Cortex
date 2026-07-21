@@ -99,6 +99,7 @@ class Settings(BaseSettings):
     cors_allowed_origins: list[str] = Field(
         default_factory=lambda: [
             "http://localhost:8100",
+            "http://localhost:8101",
         ]
     )
 
