@@ -15,18 +15,23 @@
     <!-- ================================================================ -->
     <!-- Hero -->
     <!-- ================================================================ -->
+    @if (vm$ | async; as vm){
 
     <section class="hero">
       <h1>Enterprise AI Workspace</h1>
 
+      @if (vm.hasWorkspaces) {
+
       <p>Select a workspace to continue.</p>
+
+      } @else { }
     </section>
 
     <!-- ================================================================ -->
     <!-- Workspace List -->
     <!-- ================================================================ -->
 
-    @if (vm$ | async; as vm) { @if (vm.hasWorkspaces) {
+    @if (vm.hasWorkspaces) {
 
     <ion-grid>
       <ion-row>
@@ -70,6 +75,6 @@
       <p>There are currently no workspaces available for your account.</p>
     </div>
 
-    } }
+    }}
   </div>
 </ion-content>
