@@ -1,0 +1,33 @@
+<!--
+/**
+ * Workspace Header Component
+ *
+ * Author:
+ * -------
+ * Ranjoy Sen
+ *
+ * Purpose:
+ * --------
+ * Displays the active workspace context.
+ *
+ * Responsibilities:
+ * -----------------
+ * - Display workspace name
+ * - Display workspace description
+ *
+ * Note:
+ * -----
+ * This component is presentation-only and
+ * does not communicate with services.
+ */
+-->
+
+<ion-card class="workspace-header">
+  <ion-card-header>
+    <ion-card-title> 🧠 {{ workspace.name }} </ion-card-title>
+
+    <ion-card-subtitle>
+      {{ workspace.description }}
+    </ion-card-subtitle>
+  </ion-card-header>
+</ion-card>

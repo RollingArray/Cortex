@@ -1,0 +1,240 @@
+"""
+Workspace Service
+
+Author:
+-------
+Ranjoy Sen
+
+Purpose:
+--------
+Provides business operations for
+Workspace resources.
+
+Features:
+---------
+- List workspaces
+- Retrieve workspace
+- Create workspace
+- Update workspace
+- Delete workspace
+- Bootstrap personal workspace
+"""
+
+# =============================================================================
+# Imports
+# =============================================================================
+
+from backend.exceptions.resource import ResourceNotFoundException
+from sqlalchemy.orm import Session
+
+from backend.models import Workspace
+
+from backend.models.enums import WorkspaceType
+
+from backend.repositories.workspace import WorkspaceRepository
+
+from backend.schemas.workspace import (
+    WorkspaceSummary,
+    CreateWorkspaceRequest,
+    UpdateWorkspaceRequest,
+)
+
+# =============================================================================
+# Service
+# =============================================================================
+
+
+class WorkspaceService:
+    """
+    Workspace business service.
+    """
+
+    def __init__(
+        self,
+        database: Session,
+    ) -> None:
+
+        self._repository = WorkspaceRepository(
+            database,
+        )
+
+    # =========================================================================
+    # Helpers
+    # =========================================================================
+
+    def _get_workspace(
+        self,
+        workspace_id: str,
+    ) -> Workspace:
+        """
+        Retrieve a workspace or raise if it does not exist.
+        """
+
+        workspace = self._repository.get_by_id(
+            workspace_id,
+        )
+
+        if workspace is None:
+            raise ResourceNotFoundException(
+                resource="Workspace",
+                resource_id=workspace_id,
+            )
+
+        return workspace
+
+    # =========================================================================
+    # Mappers
+    # =========================================================================
+
+    def _to_summary(
+        self,
+        workspace: Workspace,
+    ) -> WorkspaceSummary:
+        """
+        Convert a Workspace model
+        into a WorkspaceSummary.
+        """
+
+        return WorkspaceSummary(
+            id=workspace.id,
+            name=workspace.name,
+            description=workspace.description,
+            documents=0,
+            knowledge=0,
+            conversations=0,
+            agents=0,
+        )
+
+    # =========================================================================
+    # Queries
+    # =========================================================================
+
+    def get_workspaces(
+        self,
+    ) -> list[WorkspaceSummary]:
+        """
+        Retrieve all workspaces.
+        """
+
+        return [
+            self._to_summary(
+                workspace,
+            )
+            for workspace in self._repository.get_all()
+        ]
+
+    def get_workspace(
+        self,
+        workspace_id: str,
+    ) -> WorkspaceSummary:
+        """
+        Retrieve a workspace.
+        """
+
+        workspace = self._get_workspace(
+            workspace_id,
+        )
+
+        return self._to_summary(
+            workspace,
+        )
+
+    # =========================================================================
+    # Commands
+    # =========================================================================
+
+    def create_workspace(
+        self,
+        request: CreateWorkspaceRequest,
+    ) -> WorkspaceSummary:
+        """
+        Create a workspace.
+        """
+
+        workspace_type = request.workspace_type.value
+
+        workspace = Workspace(
+            name=request.name,
+            description=request.description,
+            workspace_type=workspace_type,
+            owner_id="system",
+        )
+
+        workspace = self._repository.save(
+            workspace,
+        )
+
+        return self._to_summary(
+            workspace,
+        )
+
+    def update_workspace(
+        self,
+        workspace_id: str,
+        request: UpdateWorkspaceRequest,
+    ) -> WorkspaceSummary:
+        """
+        Update a workspace.
+        """
+
+        workspace = self._get_workspace(
+            workspace_id,
+        )
+
+        if request.name is not None:
+            workspace.name = request.name
+
+        if request.description is not None:
+            workspace.description = request.description
+
+        workspace = self._repository.save(
+            workspace,
+        )
+
+        return self._to_summary(
+            workspace,
+        )
+
+    def delete_workspace(
+        self,
+        workspace_id: str,
+    ) -> None:
+        """
+        Delete a workspace.
+        """
+
+        workspace = self._get_workspace(
+            workspace_id,
+        )
+
+        self._repository.delete(
+            workspace,
+        )
+
+    # =========================================================================
+    # Bootstrap
+    # =========================================================================
+
+    def create_personal_workspace(
+        self,
+    ) -> Workspace:
+        """
+        Create the default personal workspace
+        if one does not already exist.
+        """
+
+        workspace = self._repository.get_personal()
+
+        if workspace is not None:
+            return workspace
+
+        workspace = Workspace(
+            name="Personal Workspace",
+            description="Your personal AI knowledge workspace.",
+            workspace_type=WorkspaceType.PERSONAL.value,
+            owner_id="system",
+        )
+
+        return self._repository.save(
+            workspace,
+        )

@@ -197,7 +197,7 @@ prod.env
 Run Cortex in local environment:
 
 ```bash
-ENVIRONMENT=local uv run uvicorn app.main:app --reload
+ENVIRONMENT=local uv run uvicorn backend.main:app --reload
 ```
 
 Expected:

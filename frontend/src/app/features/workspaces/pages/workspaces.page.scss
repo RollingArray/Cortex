@@ -1,0 +1,172 @@
+/**
+ * =============================================================================
+ * Workspaces Page
+ * =============================================================================
+ */
+
+/*==============================================================================
+  Content
+==============================================================================*/
+
+ion-content {
+  --padding-top: 2rem;
+  --padding-bottom: 2rem;
+  --padding-start: 1.5rem;
+  --padding-end: 1.5rem;
+}
+
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/*==============================================================================
+  Hero
+==============================================================================*/
+
+.hero {
+  margin-bottom: 2.5rem;
+}
+
+.hero h1 {
+  margin: 0;
+
+  font-size: 2rem;
+  font-weight: 700;
+
+  color: var(--ion-text-color);
+}
+
+.hero p {
+  margin-top: 0.75rem;
+
+  font-size: 1rem;
+  line-height: 1.6;
+
+  color: var(--ion-color-medium);
+}
+
+/*==============================================================================
+  Grid
+==============================================================================*/
+
+ion-grid {
+  padding: 0;
+}
+
+ion-row {
+  row-gap: 1rem;
+}
+
+/*==============================================================================
+  Workspace Card
+==============================================================================*/
+
+.workspace-card {
+  height: 100%;
+  margin: 0;
+
+  cursor: pointer;
+
+  border-radius: 16px;
+
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+
+  border: 1px solid transparent;
+}
+
+.workspace-card:hover {
+  transform: translateY(-4px);
+
+  border-color: var(--ion-color-primary);
+
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+ion-card-header {
+  padding-bottom: 0.75rem;
+}
+
+ion-card-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+/*==============================================================================
+  Card Content
+==============================================================================*/
+
+.description {
+  margin: 0;
+
+  color: var(--ion-color-medium-shade);
+
+  line-height: 1.6;
+}
+
+.description.empty {
+  font-style: italic;
+  color: var(--ion-color-medium);
+}
+
+.card-footer {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+
+  border-top: 1px solid var(--ion-color-light-shade);
+
+  font-size: 0.9rem;
+
+  color: var(--ion-color-medium);
+}
+
+.open-link {
+  font-weight: 600;
+
+  color: var(--ion-color-primary);
+}
+
+/*==============================================================================
+  Empty State
+==============================================================================*/
+
+.empty-state {
+  text-align: center;
+
+  padding: 5rem 2rem;
+}
+
+.empty-state h2 {
+  margin-bottom: 1rem;
+}
+
+.empty-state p {
+  color: var(--ion-color-medium);
+}
+
+/*==============================================================================
+  Responsive
+==============================================================================*/
+
+@media (max-width: 768px) {
+  ion-content {
+    --padding-start: 1rem;
+    --padding-end: 1rem;
+  }
+
+  .hero {
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-size: 1.75rem;
+  }
+}

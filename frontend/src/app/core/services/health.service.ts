@@ -24,7 +24,7 @@ import { Injectable, inject } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { ApiService } from './api.service';
+import { ApiService } from '../http/api.service';
 
 import { HealthStatus } from '../../shared/interfaces/health-status.interface';
 import { API } from 'src/app/shared/constants';

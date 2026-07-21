@@ -22,3 +22,9 @@ export * from './auth-token.interface';
 export * from './auth-user.interface';
 
 export * from './auth-session.interface';
+
+export * from './workspace-summary.interface';
+
+export * from './workspace-create-request.interface';
+
+export * from './workspace-update-request.interface';

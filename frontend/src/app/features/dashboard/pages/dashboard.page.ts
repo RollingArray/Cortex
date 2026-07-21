@@ -34,13 +34,21 @@ import {
   IonRow,
 } from '@ionic/angular/standalone';
 
-import { TopbarComponent } from '../../../layout/topbar/topbar.component';
-import { FooterComponent } from '../../../layout/footer/footer.component';
-import { PageLayoutComponent } from '../../../layout/page-layout/page-layout.component';
-import { MetricCardComponent, StatusIndicatorComponent } from 'src/app/shared/components';
+import { PageLayoutComponent } from 'src/app/layout/page-layout/page-layout.component';
+
+import {
+  MetricCardComponent,
+  StatusIndicatorComponent,
+  WorkspaceHeaderComponent,
+} from 'src/app/shared/components';
+
 import { ICONS } from 'src/app/shared/constants';
-import { HealthService } from 'src/app/core/services';
+
+import { HealthService, WorkspaceContextService } from 'src/app/core/services';
+
 import { HealthStatus } from 'src/app/shared/interfaces';
+
+import { AsyncPipe } from '@angular/common';
 
 /*------------------------------------------------------------------------------
  * Component
@@ -55,6 +63,9 @@ import { HealthStatus } from 'src/app/shared/interfaces';
     PageLayoutComponent,
     MetricCardComponent,
     StatusIndicatorComponent,
+    WorkspaceHeaderComponent,
+
+    AsyncPipe,
 
     IonContent,
     IonGrid,
@@ -75,11 +86,15 @@ export class DashboardPage implements OnInit {
 
   private readonly healthService = inject(HealthService);
 
+  private readonly workspaceContext = inject(WorkspaceContextService);
+
   /*--------------------------------------------------------------------------
    * Properties
    *--------------------------------------------------------------------------*/
 
   protected healthStatus = 'Loading...';
+
+  protected readonly currentWorkspace$ = this.workspaceContext.currentWorkspace$;
 
   /*--------------------------------------------------------------------------
    * Lifecycle

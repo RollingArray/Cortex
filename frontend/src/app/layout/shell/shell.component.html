@@ -1,8 +1,20 @@
-<ion-app>
-  <ion-split-pane contentId="main-content">
-    <app-sidebar></app-sidebar>
+<!--
+/**
+ * Shell Component
+ *
+ * Author:
+ * -------
+ * Ranjoy Sen
+ *
+ * Purpose:
+ * --------
+ * Provides the primary application layout
+ * for workspace-scoped pages.
+ */
+-->
 
-    <ion-router-outlet id="main-content"> </ion-router-outlet>
-  </ion-split-pane>
-</ion-app>
+<ion-split-pane contentId="main-content">
+  <app-sidebar></app-sidebar>
 
+  <ion-router-outlet id="main-content"> </ion-router-outlet>
+</ion-split-pane>

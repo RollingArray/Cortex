@@ -1,0 +1,75 @@
+<!--
+===============================================================================
+ Workspaces Page
+===============================================================================
+-->
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Cortex</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="page-container">
+    <!-- ================================================================ -->
+    <!-- Hero -->
+    <!-- ================================================================ -->
+
+    <section class="hero">
+      <h1>Enterprise AI Workspace</h1>
+
+      <p>Select a workspace to continue.</p>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- Workspace List -->
+    <!-- ================================================================ -->
+
+    @if (vm$ | async; as vm) { @if (vm.hasWorkspaces) {
+
+    <ion-grid>
+      <ion-row>
+        @for (workspace of vm.workspaces; track workspace.id) {
+
+        <ion-col size="12" size-md="6" size-xl="4">
+          <ion-card button class="workspace-card" (click)="openWorkspace(workspace)">
+            <ion-card-header>
+              <ion-card-title> {{ workspace.name }} </ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content>
+              @if (workspace.description) {
+
+              <p class="description">{{ workspace.description }}</p>
+
+              } @else {
+
+              <p class="description empty">No description available.</p>
+
+              }
+
+              <div class="card-footer">
+                <span> Workspace </span>
+
+                <span class="open-link"> Open → </span>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+
+        }
+      </ion-row>
+    </ion-grid>
+
+    } @else {
+
+    <div class="empty-state">
+      <h2>No Workspaces Found</h2>
+
+      <p>There are currently no workspaces available for your account.</p>
+    </div>
+
+    } }
+  </div>
+</ion-content>

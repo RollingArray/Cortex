@@ -5,10 +5,10 @@ from pydantic import Field
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-
 # ==================================================
 # Environment Configuration
 # ==================================================
+
 
 class Environment(str, Enum):
     LOCAL = "local"
@@ -21,6 +21,7 @@ class Environment(str, Enum):
 # AI Providers
 # ==================================================
 
+
 class AIProvider(str, Enum):
     MOCK = "mock"
     OLLAMA = "ollama"
@@ -29,6 +30,7 @@ class AIProvider(str, Enum):
 # ==================================================
 # Embedding Providers
 # ==================================================
+
 
 class EmbeddingProvider(str, Enum):
     MOCK = "mock"
@@ -44,13 +46,26 @@ ENVIRONMENT = os.getenv(
     Environment.LOCAL.value,
 )
 
+
 class VectorStoreProvider(str, Enum):
     MOCK = "mock"
     QDRANT = "qdrant"
 
+
+# ==================================================
+# Database Providers
+# ==================================================
+
+
+class DatabaseProvider(str, Enum):
+    SQLITE = "sqlite"
+    POSTGRES = "postgres"
+
+
 # ==================================================
 # Application Settings
 # ==================================================
+
 
 class Settings(BaseSettings):
     """
@@ -100,29 +115,21 @@ class Settings(BaseSettings):
     # Embedding Configuration
     # --------------------------------------------------
 
-    embedding_provider: EmbeddingProvider = (
-        EmbeddingProvider.MOCK
-    )
+    embedding_provider: EmbeddingProvider = EmbeddingProvider.MOCK
 
-    ollama_embedding_model: str = (
-        "nomic-embed-text"
-    )
+    ollama_embedding_model: str = "nomic-embed-text"
 
     # --------------------------------------------------
     # Vector Store Configuration
     # --------------------------------------------------
 
-    vector_store_provider: VectorStoreProvider = (
-        VectorStoreProvider.MOCK
-    )
+    vector_store_provider: VectorStoreProvider = VectorStoreProvider.MOCK
 
     qdrant_mode: str = "memory"
 
     qdrant_path: str = "data/qdrant"
 
-    qdrant_collection_name: str = (
-        "cortex_knowledge"
-    )
+    qdrant_collection_name: str = "cortex_knowledge"
     # --------------------------------------------------
     # Pydantic Settings
     # --------------------------------------------------
@@ -133,7 +140,13 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    
+    # --------------------------------------------------
+    # Database Configuration
+    # --------------------------------------------------
+
+    database_provider: DatabaseProvider = DatabaseProvider.SQLITE
+
+    database_url: str
 
 
 @lru_cache

@@ -48,3 +48,8 @@ logs/*.log
 
 # Qdrant Storage
 data/qdrant/
+
+# SQLite
+
+data/
+*.db

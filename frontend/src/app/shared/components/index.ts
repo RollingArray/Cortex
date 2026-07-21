@@ -16,3 +16,5 @@ export * from './metric-card/metric-card.component';
 export * from './navigation-item/navigation-item.component';
 
 export * from './status-indicator/status-indicator.component';
+
+export * from './workspace-header/workspace-header.component';

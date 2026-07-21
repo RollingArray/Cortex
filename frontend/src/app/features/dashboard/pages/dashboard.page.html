@@ -13,6 +13,7 @@
  *
  * Features:
  * ---------
+ * - Workspace overview
  * - Backend health
  * - Knowledge metrics
  * - Platform overview
@@ -21,7 +22,17 @@
 
 <app-page-layout pageTitle="Dashboard">
   <ion-content class="dashboard-content">
+    @if (currentWorkspace$ | async; as workspace) {
+
+    <app-workspace-header [workspace]="workspace"> </app-workspace-header>
+
     <ion-grid>
+      <!--
+        -----------------------------------------------------------------------
+        Metrics
+        -----------------------------------------------------------------------
+        -->
+
       <ion-row>
         <ion-col size="12" sizeMd="4">
           <app-metric-card
@@ -29,14 +40,14 @@
             subtitle="Indexed Documents"
             [icon]="icons.Metrics.Documents"
           >
-            > 0
+            0
           </app-metric-card>
         </ion-col>
 
         <ion-col size="12" sizeMd="4">
           <app-metric-card
-            title="Chunks"
-            subtitle="Knowledge Chunks"
+            title="Knowledge"
+            subtitle="Knowledge Base"
             [icon]="icons.Navigation.Chat"
           >
             0
@@ -50,5 +61,7 @@
         </ion-col>
       </ion-row>
     </ion-grid>
+
+    }
   </ion-content>
 </app-page-layout>
