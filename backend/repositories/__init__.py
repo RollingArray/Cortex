@@ -12,7 +12,7 @@ Exports repository implementations.
 
 from .repository import Repository
 
-from .workspace import WorkspaceRepository
+from .workspace.repository import WorkspaceRepository
 
 __all__ = [
     "Repository",

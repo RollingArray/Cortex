@@ -40,6 +40,10 @@ dist/
 # Jupyter
 .ipynb_checkpoints/
 
+# Storage
+storage/*
+!storage/.gitkeep
+
 # Application Logs
 logs/*.log
 

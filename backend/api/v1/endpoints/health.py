@@ -7,9 +7,10 @@ from backend.schemas.health import (
     ReadinessResponse,
     ServiceInfoResponse,
 )
-from backend.exceptions.custom import CortexException
+from backend.exceptions.base import CortexException
 
 router = APIRouter(tags=["Health"])
+
 
 @router.get(
     "/health",
@@ -19,22 +20,18 @@ async def health():
     logger = get_logger(__name__)
     logger.info("Health endpoint invoked")
 
-    return {
-        "status": "healthy"
-    }
+    return {"status": "healthy"}
 
 
 @router.get(
-        "/ready",
-        response_model=ReadinessResponse,
+    "/ready",
+    response_model=ReadinessResponse,
 )
 async def readiness():
     logger = get_logger(__name__)
     logger.info("Readiness endpoint invoked")
 
-    return {
-        "status": "ready"
-    }
+    return {"status": "ready"}
 
 
 @router.get(
@@ -50,6 +47,7 @@ async def info():
         "version": settings.app_version,
         "environment": settings.environment.value,
     }
+
 
 @router.get("/error")
 async def error():

@@ -5,7 +5,7 @@ from backend.core.config import settings
 from backend.core.cors import configure_cors
 from backend.core.lifespan import lifespan
 from backend.core.logging import configure_logging
-from backend.exceptions.custom import CortexException
+from backend.exceptions.base import CortexException
 from backend.exceptions.handlers import (
     cortex_exception_handler,
     generic_exception_handler,
