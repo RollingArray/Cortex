@@ -16,26 +16,11 @@ Features:
 - Processing status
 - Enterprise document intelligence foundation
 
-Lifecycle
----------
-UPLOADED
-    ↓
-QUEUED
-    ↓
-PROCESSING
- ┌──────────────┴──────────────┐
- ▼                             ▼
-PROCESSED                  FAILED
-    ↓
-SOFT DELETED
+Deletion Policy
+---------------
+- Documents are permanently deleted.
+- Associated files and derived artifacts are removed during deletion.
 
-Allowed State Transitions
--------------------------
-UPLOADED    -> QUEUED
-QUEUED      -> PROCESSING
-PROCESSING  -> PROCESSED
-PROCESSING  -> FAILED
-FAILED      -> QUEUED
 """
 
 # =============================================================================
@@ -73,7 +58,6 @@ from backend.models.constants import (
     PATH_LENGTH,
 )
 from backend.models.traits import (
-    SoftDeletable,
     Auditable,
 )
 
@@ -87,7 +71,6 @@ if TYPE_CHECKING:
 
 class Document(
     Auditable,
-    SoftDeletable,
     Entity,
 ):
     """
@@ -96,7 +79,6 @@ class Document(
     Traits
     ------
     - Auditable
-    - SoftDeletable
     """
 
     __tablename__ = "documents"
@@ -126,10 +108,6 @@ class Document(
             "ix_documents_checksum",
             "checksum",
         ),
-        Index(
-            "ix_documents_deleted_at",
-            "deleted_at",
-        ),
     )
 
     # -------------------------------------------------------------------------
@@ -158,7 +136,7 @@ class Document(
         nullable=False,
     )
 
-    storage_path: Mapped[str] = mapped_column(
+    storage_directory: Mapped[str] = mapped_column(
         String(PATH_LENGTH),
         nullable=False,
     )

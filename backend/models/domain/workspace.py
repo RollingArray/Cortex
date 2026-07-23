@@ -15,13 +15,11 @@ Features:
 - Workspace classification
 - Document relationship
 
-Lifecycle
----------
-ACTIVE
-    ↓
-ARCHIVED (Future)
-    ↓
-SOFT DELETED
+Deletion Policy
+---------------
+- Workspaces are permanently deleted.
+- Deleting a workspace cascades to all associated documents.
+
 """
 
 # =============================================================================
@@ -30,15 +28,19 @@ SOFT DELETED
 
 from typing import TYPE_CHECKING
 
-from sqlalchemy import CheckConstraint
-from sqlalchemy import Enum
-from sqlalchemy import Index
-from sqlalchemy import String
-from sqlalchemy import UniqueConstraint
+from sqlalchemy import (
+    CheckConstraint,
+    Enum,
+    Index,
+    String,
+    UniqueConstraint,
+)
 
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import (
+    Mapped,
+    mapped_column,
+    relationship,
+)
 
 from backend.models.entity import Entity
 from backend.models.enums.workspace import WorkspaceType
@@ -48,9 +50,8 @@ from backend.models.constants import (
     NAME_LENGTH,
 )
 from backend.models.traits import (
-    Ownable,
-    SoftDeletable,
     Auditable,
+    Ownable,
 )
 
 if TYPE_CHECKING:
@@ -64,7 +65,6 @@ if TYPE_CHECKING:
 class Workspace(
     Auditable,
     Ownable,
-    SoftDeletable,
     Entity,
 ):
     """
@@ -74,7 +74,6 @@ class Workspace(
     ------
     - Auditable
     - Ownable
-    - SoftDeletable
     """
 
     __tablename__ = "workspaces"
@@ -91,10 +90,6 @@ class Workspace(
         Index(
             "ix_workspaces_workspace_type",
             "workspace_type",
-        ),
-        Index(
-            "ix_workspaces_deleted_at",
-            "deleted_at",
         ),
     )
 
