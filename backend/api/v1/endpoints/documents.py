@@ -27,8 +27,6 @@ from uuid import UUID
 from fastapi import (
     APIRouter,
     Depends,
-    Response,
-    status,
 )
 
 from sqlalchemy.orm import (
@@ -39,7 +37,6 @@ from backend.core.database import (
     get_database,
 )
 
-from backend.repositories.document.repository import DocumentRepository
 from backend.schemas.document import (
     DocumentDeleteResponse,
     DocumentListResponse,
@@ -48,6 +45,10 @@ from backend.schemas.document import (
 
 from backend.services.document.service import (
     DocumentService,
+)
+
+from backend.di.services import (
+    get_document_service,
 )
 
 # =============================================================================
@@ -72,17 +73,13 @@ router = APIRouter(
 )
 async def get_documents(
     workspace_id: UUID,
-    database: Session = Depends(
-        get_database,
+    service: DocumentService = Depends(
+        get_document_service,
     ),
 ) -> DocumentListResponse:
     """
     Retrieve all documents belonging to a workspace.
     """
-
-    service = DocumentService(
-        database,
-    )
 
     documents = service.list_documents(
         workspace_id,
@@ -99,21 +96,13 @@ async def get_documents(
 )
 async def get_document(
     document_id: UUID,
-    database: Session = Depends(
-        get_database,
+    service: DocumentService = Depends(
+        get_document_service,
     ),
 ) -> DocumentResponse:
     """
     Retrieve a document by identifier.
     """
-
-    repository = DocumentRepository(
-        database,
-    )
-
-    service = DocumentService(
-        database,
-    )
 
     document = service.get_document(
         document_id,
@@ -130,21 +119,13 @@ async def get_document(
 )
 async def delete_document(
     document_id: UUID,
-    database: Session = Depends(
-        get_database,
+    service: DocumentService = Depends(
+        get_document_service,
     ),
 ) -> DocumentDeleteResponse:
     """
     Delete a document.
     """
-
-    repository = DocumentRepository(
-        database,
-    )
-
-    service = DocumentService(
-        repository,
-    )
 
     service.delete_document(
         document_id,

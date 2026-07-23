@@ -135,12 +135,6 @@ class WorkspaceRepository(
             workspace,
         )
 
-        self._database.commit()
-
-        self._database.refresh(
-            workspace,
-        )
-
         return workspace
 
     def delete(
@@ -154,5 +148,3 @@ class WorkspaceRepository(
         self._database.delete(
             workspace,
         )
-
-        self._database.commit()

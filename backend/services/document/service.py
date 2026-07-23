@@ -20,11 +20,12 @@ Features:
 
 from __future__ import annotations
 
-import shutil
-from pathlib import Path
 from uuid import UUID, uuid4
 
+from pathlib import Path
+
 from fastapi import UploadFile
+
 from sqlalchemy.orm import Session
 
 from backend.exceptions.already_exists import (
@@ -45,7 +46,11 @@ from backend.repositories.workspace.repository import (
     WorkspaceRepository,
 )
 
-from backend.utils.checksum import calculate_sha256
+from backend.services.storage.service import StorageService
+
+from backend.services.base import (
+    BaseService,
+)
 
 SUPPORTED_DOCUMENT_EXTENSIONS = {
     ".pdf",
@@ -61,7 +66,9 @@ SUPPORTED_DOCUMENT_EXTENSIONS = {
 }
 
 
-class DocumentService:
+class DocumentService(
+    BaseService,
+):
     """
     Service responsible for Document business operations.
     """
@@ -74,6 +81,10 @@ class DocumentService:
         Initialize the document service.
         """
 
+        super().__init__(
+            database,
+        )
+
         self._repository = DocumentRepository(
             database,
         )
@@ -82,60 +93,43 @@ class DocumentService:
             database,
         )
 
+        self._storage = StorageService()
+
     # =========================================================================
     # Helpers
     # =========================================================================
-
-    def _build_storage_path(
+    def _delete_document(
         self,
-        workspace_id: UUID,
-        filename: str,
-        document_id: UUID,
-    ) -> Path:
+        document: Document,
+    ) -> None:
         """
-        Build the storage path for a document.
+        Delete all resources associated with a document.
+
+        This method assumes the caller is responsible
+        for transaction management.
         """
 
-        extension = Path(filename).suffix
+        #
+        # Delete physical document.
+        #
 
-        workspace_directory = Path("storage") / "workspaces" / str(workspace_id)
-
-        workspace_directory.mkdir(
-            parents=True,
-            exist_ok=True,
+        self._storage.delete_document(
+            document.storage_directory,
+            document.storage_filename,
         )
 
-        return workspace_directory / f"{document_id}{extension}"
+        #
+        # TODO
+        #
+        # Delete parsed document
+        # Delete chunks
+        # Delete embeddings
+        # Delete vector index
+        # Delete extracted metadata
+        #
 
-    def _save_file(
-        self,
-        file: UploadFile,
-        destination: Path,
-    ) -> tuple[int, str]:
-        """
-        Save uploaded file to storage.
-
-        Returns
-        -------
-        tuple[int, str]
-            (size_bytes, checksum)
-        """
-
-        with destination.open("wb") as output:
-            shutil.copyfileobj(
-                file.file,
-                output,
-            )
-
-        size_bytes = destination.stat().st_size
-
-        checksum = calculate_sha256(
-            destination,
-        )
-
-        return (
-            size_bytes,
-            checksum,
+        self._repository.delete(
+            document,
         )
 
     # =========================================================================
@@ -172,9 +166,13 @@ class DocumentService:
         filename = file.filename
 
         if not filename:
-            raise ValueError("Uploaded file must have a filename.")
+            raise ValueError(
+                "Uploaded file must have a filename.",
+            )
 
-        extension = Path(filename).suffix.lower()
+        extension = Path(
+            filename,
+        ).suffix.lower()
 
         if extension not in SUPPORTED_DOCUMENT_EXTENSIONS:
             raise UnsupportedDocumentTypeException(
@@ -182,15 +180,18 @@ class DocumentService:
             )
 
         # ---------------------------------------------------------------------
-        # Generate document identifier
+        # Generate storage location
         # ---------------------------------------------------------------------
 
         document_id = uuid4()
 
-        destination = self._build_storage_path(
-            workspace_id=workspace_id,
-            filename=filename,
-            document_id=document_id,
+        storage_directory = self._storage.build_workspace_directory(
+            workspace_id,
+        )
+
+        storage_filename = self._storage.build_storage_filename(
+            document_id,
+            filename,
         )
 
         try:
@@ -199,9 +200,10 @@ class DocumentService:
             # Save file
             # -------------------------------------------------------------
 
-            size_bytes, checksum = self._save_file(
+            size_bytes, checksum = self._storage.save_document(
                 file=file,
-                destination=destination,
+                storage_directory=storage_directory,
+                storage_filename=storage_filename,
             )
 
             # -------------------------------------------------------------
@@ -225,27 +227,40 @@ class DocumentService:
                 id=document_id,
                 workspace_id=workspace_id,
                 original_filename=filename,
-                storage_filename=destination.name,
-                storage_path=str(destination),
-                content_type=(file.content_type or "application/octet-stream"),
+                storage_directory=str(
+                    storage_directory,
+                ),
+                storage_filename=storage_filename,
+                content_type=file.content_type or "application/octet-stream",
                 size_bytes=size_bytes,
                 checksum=checksum,
                 status=DocumentStatus.UPLOADED,
                 processing_progress=0,
             )
 
-            return self._repository.create(
+            with self.transaction():
+
+                self._repository.create(
+                    document,
+                )
+
+            self.refresh(
                 document,
             )
 
+            return document
+
         except Exception:
 
-            if destination.exists():
-                destination.unlink()
+            self._storage.delete_document(
+                storage_directory,
+                storage_filename,
+            )
 
             raise
 
         finally:
+
             file.file.close()
 
     # =========================================================================
@@ -285,7 +300,7 @@ class DocumentService:
         document_id: UUID,
     ) -> bool:
         """
-        Soft delete a document.
+        Permanently delete a document.
         """
 
         document = self._repository.get_by_id(
@@ -295,8 +310,31 @@ class DocumentService:
         if document is None:
             return False
 
-        self._repository.delete(
-            document,
-        )
+        with self.transaction():
+
+            self._delete_document(
+                document,
+            )
 
         return True
+
+    def delete_workspace_documents(
+        self,
+        workspace_id: UUID,
+    ) -> None:
+        """
+        Permanently delete all documents
+        belonging to a workspace.
+        """
+
+        documents = self._repository.list_by_workspace(
+            workspace_id,
+        )
+
+        with self.transaction():
+
+            for document in documents:
+
+                self._delete_document(
+                    document,
+                )

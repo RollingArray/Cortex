@@ -149,6 +149,12 @@ class Settings(BaseSettings):
 
     database_url: str
 
+    # --------------------------------------------------
+    # Storage Configuration
+    # --------------------------------------------------
+
+    storage_path: str = "storage"
+
 
 @lru_cache
 def get_settings() -> "Settings":

@@ -42,6 +42,7 @@ from backend.core.database import (
     get_database,
 )
 
+from backend.di.services import get_document_service, get_workspace_service
 from backend.schemas.document import DocumentResponse, DocumentUploadResponse
 from backend.schemas.workspace import (
     WorkspaceSummary,
@@ -75,17 +76,13 @@ router = APIRouter(
     response_model=list[WorkspaceSummary],
 )
 async def get_workspaces(
-    database: Session = Depends(
-        get_database,
+    service: WorkspaceService = Depends(
+        get_workspace_service,
     ),
 ) -> list[WorkspaceSummary]:
     """
     Retrieve all available workspaces.
     """
-
-    service = WorkspaceService(
-        database,
-    )
 
     return service.get_workspaces()
 
@@ -96,17 +93,13 @@ async def get_workspaces(
 )
 async def get_workspace(
     workspace_id: UUID,
-    database: Session = Depends(
-        get_database,
+    service: WorkspaceService = Depends(
+        get_workspace_service,
     ),
 ) -> WorkspaceSummary:
     """
     Retrieve a workspace by identifier.
     """
-
-    service = WorkspaceService(
-        database,
-    )
 
     return service.get_workspace(
         workspace_id,
@@ -120,17 +113,13 @@ async def get_workspace(
 )
 async def create_workspace(
     request: CreateWorkspaceRequest,
-    database: Session = Depends(
-        get_database,
+    service: WorkspaceService = Depends(
+        get_workspace_service,
     ),
 ) -> WorkspaceSummary:
     """
     Create a new workspace.
     """
-
-    service = WorkspaceService(
-        database,
-    )
 
     return service.create_workspace(
         request,
@@ -144,17 +133,13 @@ async def create_workspace(
 async def update_workspace(
     workspace_id: UUID,
     request: UpdateWorkspaceRequest,
-    database: Session = Depends(
-        get_database,
+    service: WorkspaceService = Depends(
+        get_workspace_service,
     ),
 ) -> WorkspaceSummary:
     """
     Update an existing workspace.
     """
-
-    service = WorkspaceService(
-        database,
-    )
 
     return service.update_workspace(
         workspace_id=workspace_id,
@@ -168,17 +153,13 @@ async def update_workspace(
 )
 async def delete_workspace(
     workspace_id: UUID,
-    database: Session = Depends(
-        get_database,
+    service: WorkspaceService = Depends(
+        get_workspace_service,
     ),
 ) -> Response:
     """
     Delete a workspace.
     """
-
-    service = WorkspaceService(
-        database,
-    )
 
     service.delete_workspace(
         workspace_id,
@@ -197,17 +178,13 @@ async def delete_workspace(
 async def upload_document(
     workspace_id: UUID,
     file: UploadFile = File(...),
-    database: Session = Depends(
-        get_database,
+    service: DocumentService = Depends(
+        get_document_service,
     ),
 ) -> DocumentUploadResponse:
     """
     Upload a document into a workspace.
     """
-
-    service = DocumentService(
-        database,
-    )
 
     document = service.upload_document(
         workspace_id=workspace_id,

@@ -16,7 +16,7 @@ Features:
 - Retrieve document
 - Retrieve document by checksum
 - List workspace documents
-- Soft delete document
+- Permanently delete document
 """
 
 from __future__ import annotations
@@ -77,7 +77,6 @@ class DocumentRepository:
             Document,
         ).where(
             Document.id == document_id,
-            Document.deleted_at.is_(None),
         )
 
         return self._database.scalar(
@@ -99,7 +98,6 @@ class DocumentRepository:
         ).where(
             Document.workspace_id == workspace_id,
             Document.checksum == checksum,
-            Document.deleted_at.is_(None),
         )
 
         return self._database.scalar(
@@ -111,8 +109,8 @@ class DocumentRepository:
         workspace_id: UUID,
     ) -> list[Document]:
         """
-        Retrieve all active documents
-        for a workspace.
+        Retrieve all documents
+        belonging to a workspace.
         """
 
         statement = (
@@ -121,7 +119,6 @@ class DocumentRepository:
             )
             .where(
                 Document.workspace_id == workspace_id,
-                Document.deleted_at.is_(None),
             )
             .order_by(
                 Document.created_at.desc(),
@@ -142,17 +139,8 @@ class DocumentRepository:
         self,
         document: Document,
     ) -> Document:
-        """
-        Persist a new document.
-        """
 
         self._database.add(
-            document,
-        )
-
-        self._database.commit()
-
-        self._database.refresh(
             document,
         )
 
@@ -162,17 +150,8 @@ class DocumentRepository:
         self,
         document: Document,
     ) -> Document:
-        """
-        Persist updates to a document.
-        """
 
         self._database.add(
-            document,
-        )
-
-        self._database.commit()
-
-        self._database.refresh(
             document,
         )
 
@@ -182,17 +161,10 @@ class DocumentRepository:
         self,
         document: Document,
     ) -> None:
-        """
-        Soft delete a document.
-        """
 
-        document.soft_delete()
-
-        self._database.add(
+        self._database.delete(
             document,
         )
-
-        self._database.commit()
 
     def exists_duplicate(
         self,
@@ -205,13 +177,21 @@ class DocumentRepository:
         """
 
         statement = (
-            select(Document.id)
+            select(
+                Document.id,
+            )
             .where(
                 Document.workspace_id == workspace_id,
                 Document.checksum == checksum,
-                Document.deleted_at.is_(None),
             )
-            .limit(1)
+            .limit(
+                1,
+            )
         )
 
-        return self._database.scalar(statement) is not None
+        return (
+            self._database.scalar(
+                statement,
+            )
+            is not None
+        )

@@ -42,12 +42,21 @@ from backend.schemas.workspace import (
     UpdateWorkspaceRequest,
 )
 
+from backend.services.base import (
+    BaseService,
+)
+
+from backend.services.document.service import DocumentService
+from backend.services.storage import StorageService
+
 # =============================================================================
 # Service
 # =============================================================================
 
 
-class WorkspaceService:
+class WorkspaceService(
+    BaseService,
+):
     """
     Workspace business service.
     """
@@ -60,10 +69,23 @@ class WorkspaceService:
         self,
         database: Session,
     ) -> None:
+        """
+        Initialize the workspace service.
+        """
+
+        super().__init__(
+            database,
+        )
 
         self._repository = WorkspaceRepository(
             database,
         )
+
+        self._document_service = DocumentService(
+            database,
+        )
+
+        self._storage = StorageService()
 
     # =========================================================================
     # Helpers
@@ -88,10 +110,6 @@ class WorkspaceService:
             )
 
         return workspace
-
-    # =========================================================================
-    # Mappers
-    # =========================================================================
 
     def _to_summary(
         self,
@@ -175,7 +193,13 @@ class WorkspaceService:
             created_by="system",
         )
 
-        workspace = self._repository.save(
+        with self.transaction():
+
+            self._repository.save(
+                workspace,
+            )
+
+        self.refresh(
             workspace,
         )
 
@@ -202,7 +226,13 @@ class WorkspaceService:
         if request.description is not None:
             workspace.description = request.description
 
-        workspace = self._repository.save(
+        with self.transaction():
+
+            self._repository.save(
+                workspace,
+            )
+
+        self.refresh(
             workspace,
         )
 
@@ -215,16 +245,26 @@ class WorkspaceService:
         workspace_id: UUID,
     ) -> None:
         """
-        Delete a workspace.
+        Permanently delete a workspace.
         """
 
         workspace = self._get_workspace(
             workspace_id,
         )
 
-        self._repository.delete(
-            workspace,
+        self._document_service.delete_workspace_documents(
+            workspace_id,
         )
+
+        self._storage.delete_workspace(
+            workspace_id,
+        )
+
+        with self.transaction():
+
+            self._repository.delete(
+                workspace,
+            )
 
     # =========================================================================
     # Bootstrap
@@ -250,6 +290,14 @@ class WorkspaceService:
             owner_id="system",
         )
 
-        return self._repository.save(
+        with self.transaction():
+
+            self._repository.save(
+                workspace,
+            )
+
+        self.refresh(
             workspace,
         )
+
+        return workspace
